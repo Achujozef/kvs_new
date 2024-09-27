@@ -1,0 +1,1415 @@
+@font-face {
+    font-family:Alegreya;
+    src: url("/keralaviswakarmasabha2022/font/Alegreya-Italic-VariableFont_wght.ttf");
+    font-family: patrickhand;
+    src: url("/keralaviswakarmasabha2022/font/PatrickHand-Regular.ttf");
+    font-family:josefinslab;
+    src: url("/keralaviswakarmasabha2022/font/JosefinSlab-VariableFont_wght.ttf");
+    font-family:ElMessiri;
+    src: url("/keralaviswakarmasabha2022/font/ElMessiri-VariableFont_wght.ttf");
+    font-family: BerkshireSwash;
+    src: url("/keralaviswakarmasabha2022/font/BerkshireSwash-Regular.ttf");
+    font-family:Montserrat;
+    src:url("/keralaviswakarmasabha2022/font/Montserrat-VariableFont_wght.ttf");
+    font-family:Roboto;
+    src:url("/keralaviswakarmasabha2022/font/RobotoCondensed-Regular.ttf")format("truetype");
+  }
+  .icon-bar a {
+    display: block;
+    padding: 6px;
+   float: right;
+    border-radius: 100%;
+    height: 51px;
+}
+.whatsapp {
+    background: #53d365;
+    color: #448edd;
+    border-radius: 100%;
+}
+.fa-whatsapp
+{
+font-size:38px !important;
+}
+  .icon-bar {
+      position: fixed;
+      top: 80%;
+     margin-left: 65px;
+      z-index:99999;
+      
+    } 
+.custom-text
+  {
+    font-family: Alegreya;
+  }
+  .custom-text1
+  {
+    font-family: patrickhand;
+    font-style: italic;
+  }
+  .custom-text2
+  {
+    font-family: patrickhand;
+   
+  }
+  .custom-text3
+  {
+    font-family: lMessiri;
+   
+  }
+  .custom-text4
+  {
+    font-family:BerkshireSwash;
+   
+  }
+  .custom-text5
+  {
+    font-family: Montserrat;
+   
+  }
+  .custom-text6
+  {
+    font-family: 'Noto Sans Malayalam', sans-serif !important;
+    font-size: 16px;
+    font-weight: 500;
+   
+  }
+.nav-item
+{
+  font-family:Josefin Slab !important;
+  font-weight:500;
+
+}
+ #card-bg {
+    background: linear-gradient(277deg, #dddddd, transparent);
+    width:820px;
+}
+
+#card_bg
+{
+   text-align:-webkit-center !important;
+   text-align:-moz-center !important;
+ 
+  
+}
+.floatright
+{
+    float: right;
+}
+.card
+{
+    background: linear-gradient(277deg, #dddddd, transparent);
+}
+.btn-primary
+{
+    background-color: #00a74c !important;
+    border-color: #00a74c !important;
+}
+.arrowBox{
+    position: relative;
+    width:220px;
+    background: #00a74c;
+    height:40px;
+    line-height: 40px;
+    margin-bottom:30px; 
+   text-align: center;
+    color:#fff;
+  }
+  div#n2-ss-5 .n2-ss-slide-limiter {
+    max-width: 1200px;
+    height: 480px !important;
+}
+  .arrow-right::after{
+    content: "";
+    position: absolute;
+    right: -20px;
+    top: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 20px solid#00a74c; 
+}
+
+.materimonial-img
+{
+    width: 150px;
+    height: 150px;
+    margin-top: 50px;
+    border-radius: 100%;
+}
+.materimonialservices
+{
+    background: #da8616;
+}
+.buttton
+{ border-bottom-right-radius: 33.11px;
+ border-top-left-radius: 33.11px;
+ 
+}
+.num_rows
+{
+    width: 150px;
+}
+#card-statecommite
+{
+    width: 500px;
+}
+#card-login
+{
+    width: 350px;
+    height: 400px;
+    margin-top: 80px;
+    margin-bottom: 80px;
+    border-radius: 50px ;
+}
+.tb_search
+{
+   
+    float:right;
+}
+ .social-head
+{
+    background-color: #da8616;
+    
+}
+.bg-color, .dropdown-menu
+{
+    background-color: #000;
+}
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: .25rem 1rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    text-decoration: none;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    text-align: justify !important;
+}
+.dropdown-item:hover{
+ 
+    background-color: #da8616;
+
+}
+#nav-item:hover
+{
+    background-color: #da8616;
+    /* transform: skewx(148deg); */
+}
+.about_head ,.navbar-brand
+{
+    font-family: Berkshire Swash !important;
+}
+.about_us
+{
+    margin-top: 50px;
+  
+}
+.about_para
+{
+    margin-top: 50px;
+    font-family:Gentium Book Plus;
+    font-weight: 400;
+    font-size: 18px;
+    
+   
+}
+.foot_head, address,.foot_para,#Copyright
+{
+    font-family:Josefin Slab !important;
+    font-weight:500; 
+}
+.icon-head
+{font-family: Berkshire Swash;
+    font-weight: 500;
+    margin-top: 10px;
+}
+.quick_1
+{
+    margin-left: -42px;
+    list-style-type: none;
+}
+.quick_2
+{
+    list-style-type: none;
+}
+/* .dropdown-menu{
+   width: 250px;
+} */
+.quick
+{
+    list-style-type: none;
+    text-align:left;
+}
+.social-link
+{
+    margin-left: -48px;
+}
+
+footer {
+    background-color: #000;
+
+}
+.foot_about,.foot_quick,.foot_address
+{
+    color: #ffffff;
+}
+#foot
+{
+    background-color:#0e0d0d;
+    color: #ffffff;
+    text-align: center;
+}
+ a 
+{
+    color: #ffff !important;
+    text-decoration: none !important;
+}
+
+#head-breadcrump
+{
+    margin-top: 30px;
+   font-family:Gentium Book Plus;
+}
+.box-warapper:hover {
+  
+    padding-top: 14px;
+    padding-bottom: 14px;
+    box-shadow: #000 2px 2px 2px 2px;
+    border-radius: 10px;
+    
+}
+.logo
+{
+    width: 30px;
+    height: 30px;
+}
+.box-warapper{
+    background-color:#ffffff;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    height:730px;
+    border-radius: 5px;
+}
+.textarea
+{
+    width: 100%;
+
+}
+#col
+{
+    margin-top: 20px;
+}
+
+.icon-box {
+    border-radius: 100%;
+    width: 100px;
+    height: 100px;
+    background-color: black;
+    text-align: center;
+}
+.icon-box:hover {
+    
+    background-color: #DA8616;
+    
+}
+.authorimg:hover{
+    -webkit-filter: sepia(100%); 
+    filter: sepia(100%);
+
+}
+
+#icon
+{
+    margin-top: 32px;
+    color: #ffffff;
+}
+#services-wrapper
+{
+    background-color: rgb(245, 245, 245);
+    margin-top: 60px;
+}
+
+.author-box
+{
+    background-color: #ededed;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border-radius:50px;
+}
+.icon-text
+{
+    margin-top: 80px;
+}
+.form-card {
+    background: linear-gradient(176deg, white, transparent);
+    padding: 20px;
+    height: 520px;
+}
+.form-card1 {
+    background: rgb(242, 239, 245);
+    padding: 20px;
+
+}
+.icon-contact1
+{
+   
+        background: black;
+     
+        width: 75px;
+        height: 75px;
+        border-radius: 100px;
+        padding: 27px;
+        color: #ffffff;
+    }
+.contact-text
+{
+ margin-top: 25px;
+}
+
+.icon-contact2 {
+    background: black;
+    width: 75px;
+    height: 75px;
+    border-radius: 100px;
+    color: #ffffff;
+    padding-top: 20px;
+    padding-left: 4px;
+
+}
+.icon-contact3 {
+    background: black;
+    width: 75px;
+    height: 75px;
+    border-radius: 100px;
+    color: #ffffff;
+    padding-top: 20px;
+    padding-left: 10px;
+}
+.icon-contact3:hover ,.icon-contact2:hover , .icon-contact1:hover
+{
+    background-color: #da8616;
+}
+#contact_section
+{
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+.author{
+ width: 50%;
+ margin-left: 250px;
+}
+.authorimg
+{
+    border-radius: 60%;
+}
+div#n2-ss-5 .n-uc-lPYDpFCNUbWo-inner {
+    padding: 10px 50px 10px 10px;
+    justify-content: center;
+    background: linear-gradient(67deg, white, transparent);
+}
+div#n2-ss-5 .n-uc-rrDEk7BDdqc1-inner {
+    padding: 10px 50px 10px 10px;
+    justify-content: center;
+    background: linear-gradient(45deg, black, transparent);
+}
+div#n2-ss-5 .n-uc-VU1qjFbjQtxP-inner {
+    padding: 10px 10px 10px 10px;
+    justify-content: center;
+    background: linear-gradient(45deg, black, transparent);
+}
+#cd-breadcrumb {
+    background: linear-gradient(45deg,black,transparent),url('../images/slider.jpg');
+    background-size: cover;
+    height: 250px;
+}
+#cd-breadcrumbform {
+    background: linear-gradient(45deg,black,transparent),url('../images/slider.jpg');
+    background-size: cover;
+    height: 250px;
+}
+  .justifycontentend
+  {
+    justify-content:end;
+  }
+  #justifycontentend{
+    justify-content: center;
+  }
+  div#n2-ss-5 .n-uc-lPYDpFCNUbWo-inner {
+    padding: 10px 50px 10px 10px;
+    justify-content: center;
+    background: linear-gradient(67deg, #181616, transparent) !important;
+}
+
+    #cd-breadcrumb {
+        background: linear-gradient(45deg,black,transparent),url('../images/slider.jpg');
+        background-size: cover;
+        height: 250px;
+        background-position-x: center;
+    }
+.icon
+{
+    text-align: center;
+}
+.icon_text, th
+{
+    text-align: center;
+    font-family: Josefin Slab;
+    font-weight:bold;
+}
+/* search */
+.form_search
+{
+    float: right;
+}
+#fa-search
+{
+    margin-left:9px;
+}
+.search-bar {
+   
+     width: 300px;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    border-radius: 60px;
+     padding: 10px;
+     height: 50px;
+  
+  }
+  .search-bar input {
+    background: transparent;
+    flex: 1;
+    border: 0;
+ 
+    font-size: 20px;
+    color:#ffffff;
+  }
+  ::placeholder {
+    color: whitesmoke;
+  }
+  .search-bar button {
+    border: 0;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+
+  }
+  .text-padding
+  {
+   padding: 15px;
+   
+  }
+  .text_justifiy 
+  {
+    text-align: justify;
+  }
+#nav-health
+{
+    width: 230px;
+
+}
+#table-id-health
+{
+    display: block;
+  
+    scroll-behavior: auto;
+    scrollbar-width: thin;
+}
+
+#col-health
+{
+    margin-left: 326px;
+}
+/*  */
+@media only screen
+and (min-device-width: 220px)
+and (max-device-width:360px)
+{   
+    .icon-bar {
+        position: fixed;
+        top: 80%;
+       margin-left:-40px !important;
+        z-index:99999;
+        
+      } 
+    #tmp-card_row
+    {
+        width: 581px !important;
+        margin-left: -145px;
+    }
+    
+    #col-health
+{
+    margin-left: 0px !important;
+}
+   
+    .text-padding {
+       
+        font-size: 12px !important;
+    }
+    /* search */
+.form_search
+{
+    float: left !important;
+}
+#fa-search
+{
+    margin-left:3px !important;
+}
+.search-bar {
+   
+     width: 282px !important;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    border-radius: 60px;
+     padding: 10px;
+     height: 50px;
+  
+  }
+  .search-bar input {
+    background: transparent;
+    flex: 1;
+    border: 0;
+ 
+    font-size: 20px;
+    color:#ffffff;
+  }
+  ::placeholder {
+    color: whitesmoke;
+  }
+  .search-bar button {
+    border: 0;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+
+  }
+
+    /* header and footer */
+    .navbar-brand
+    {
+        font-size: 12px !important;
+    }
+    #social-left
+    {
+        width: 278px !important;
+        font-size: 10px !important;
+    }
+    #social-right
+    {
+        float:  left !important;
+    }
+ .social-link
+ {
+    width: 339px !important;
+    font-size: 12px !important;
+ }
+ #copyright
+ {
+    font-size: 12px !important;
+ }
+ .table-responsive
+ {
+    display: block !important;
+ }
+ /* executiveforum.html */
+ .author {
+    width: 100% !important;
+    margin-left: 0px !important;
+}
+.num_rows {
+    width: 207px !important;
+}
+.tb_search {
+    float: left !important;
+    margin-top: 10px !important;
+    width: 203px !important;
+}
+/* executiveforumreg.html */
+#card-statecommite {
+    width: 295px !important;
+}
+/* login */
+#card-login
+{
+    width: 208px !important;
+    height: 300px !important;
+    margin-top:60px !important;
+    margin-bottom:60px !important;
+    border-radius: 50px !important;
+}
+/* materimonialservices.html */
+#card-bg2
+{
+    margin-top: 20px !important;
+}
+/* viewprofile.html */
+   .view_profile
+   {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+ 
+   }
+   #card-bg {
+   
+    width:300px !important;
+}
+
+.arrowBox {
+    position: relative;
+    width: 180px !important;
+    background: #00a74c;
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #fff;
+    margin-left: -30px !important;
+   
+}
+.custom-text2
+{
+    margin-top:  10px !important;
+}
+/* contact.html */
+.form-card {
+    background: linear-gradient(242deg, white, transparent) !important;
+    padding: 20px;
+    height: 629px !important;
+}
+
+#col-form
+{
+    margin-top: 30px !important;
+}
+
+.envelope
+{
+    margin-top: 30px !important;
+}
+.icon-contact1 , .icon-contact2,.icon-contact3 {
+    
+    width: 65px !important;
+    height: 65px !important;
+    border-radius: 100px !important;
+    padding: 23px !important;
+    
+}
+.icon-contact2,.icon-contact3 {
+    
+    width: 65px !important;
+    height: 65px !important;
+    border-radius: 100px !important;
+    padding: 18px !important;
+    
+}
+.icon
+{
+    text-align: center !important;
+}
+.icon_text
+{
+    text-align: center !important;
+    font-size: 14px !important;
+}
+.img-fluid
+{
+    width: 50px !important;
+    height: 50px !important;
+}
+}
+
+@media only screen
+and (min-device-width: 360px)
+and (max-device-width: 420px)
+{
+    .icon-bar {
+        position: fixed;
+        top: 80%;
+       margin-left:-40px !important;
+        z-index:99999;
+        
+      } 
+    .navbar-brand
+    {
+        font-size: 15px !important;
+    }
+    #tmp-card_row
+    {    width: 680px !important;
+        margin-left: -170px !important; 
+    }
+    #col-health
+{
+    margin-left: 20px !important;
+}
+  
+    .text-padding {
+   
+        font-size: 14px !important;
+    }
+       /* search */
+       .form-search
+{
+   
+    /* margin-left: -29px !important; */
+  float:right !important;
+}
+#fa-search
+{
+    margin-left:-40px !important;
+    /*background:red !important;*/
+    /*nokia7.2*/
+     
+}
+.search-bar {
+   
+     width: 294px !important;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    border-radius: 60px;
+     padding: 10px;
+     height: 50px;
+  
+  }
+  .search-bar input {
+    background: transparent;
+    flex: 1;
+    border: 0;
+ 
+    font-size: 20px;
+    color:#ffffff;
+  }
+  ::placeholder {
+    color: whitesmoke;
+  }
+  .search-bar button {
+    border: 0;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+
+  }
+
+     /* header and footer */
+     .social-head {
+        background-color: #da8616;
+        height: 80px;
+    }
+     #social-left
+     {
+         width: 350px !important;
+         font-size: 12px !important;
+     }
+     #social-right
+     {
+         float:  left !important;
+     }
+  .social-link
+  {
+     width: 350px !important;
+     font-size: 12px !important;
+  }
+  #copyright
+  {
+     font-size: 12px !important;
+  }
+  .table-responsive
+  {
+     display: block !important;
+  }
+  /* executiveforum.html */
+  .author {
+     width: 100% !important;
+     margin-left: 0px !important;
+ }
+ .num_rows {
+    width:249px !important;
+ }
+ .tb_search {
+    float:left !important;
+    margin-top: 10px !important;
+ 
+}
+/* taluk.html */
+
+ /* executiveforumreg.html */
+ #card-statecommite {
+     width: 295px !important;
+ }
+ /* login */
+ #card-login
+ {
+    width: 295px !important;
+    height:auto !important;
+    margin-top: 150px !important;
+    margin-bottom: 150px !important;
+    border-radius: 50px !important;
+ }
+ /* materimonialservices.html */
+ #card-bg2
+ {
+     margin-top: 20px !important;
+ }
+ /* viewprofile.html */
+    .view_profile
+    {
+     margin-left: 0px !important;
+     margin-right: 0px !important;
+  
+    }
+    #card-bg {
+    
+     width:330px !important;
+ }
+ .arrowBox {
+   
+     width: 250px !important;
+   
+ }
+ .custom-text2
+ {
+     margin-top:  10px !important;
+ }
+ /* contact.html */
+ .form-card {
+     background: linear-gradient(242deg, white, transparent) !important;
+     padding: 20px;
+     height: 629px !important;
+ }
+ 
+ #col-form
+ {
+     margin-top: 30px !important;
+ }
+ 
+ .envelope
+ {
+     margin-top: 30px !important;
+ }
+ .icon-contact1 , .icon-contact2,.icon-contact3 {
+     
+     width: 65px !important;
+     height: 65px !important;
+     border-radius: 100px !important;
+     padding: 23px !important;
+     
+ }
+ .icon-contact2,.icon-contact3 {
+     
+     width: 65px !important;
+     height: 65px !important;
+     border-radius: 100px !important;
+     padding: 18px !important;
+     
+ }
+ .icon
+ {
+     text-align: center !important;
+ }
+ .icon_text
+ {
+     text-align: center !important;
+     font-size: 14px !important;
+ }
+ .img-fluid
+{
+    width: 50px !important;
+    height: 50px !important;
+}
+}
+@media only screen
+and (min-device-width: 420px)
+and (max-device-width: 540px)
+{
+    .icon-bar {
+        position: fixed;
+        top: 80%;
+       margin-left:-40px !important;
+        z-index:99999;
+        
+      } 
+    
+    #tmp-card_row
+    {
+        width: 680px !important;
+        margin-left: -170px !important;
+    }
+       
+    #col-health
+{
+    margin-left: 40px !important;
+}
+
+    .text-padding {
+        
+        font-size: 14px !important;
+    }
+         /* search */
+#form-search
+{
+   
+    margin-left: -52px !important;
+    /*background:blue !important;*/
+ 
+}
+#fa-search
+{
+    margin-left:4px !important;
+    
+      
+
+}
+.search-bar {
+   
+     width: 294px !important;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    border-radius: 60px;
+     padding: 10px;
+     height: 50px;
+  
+  }
+  .search-bar input {
+    background: transparent;
+    flex: 1;
+    border: 0;
+ 
+    font-size: 20px;
+    color:#ffffff;
+  }
+  ::placeholder {
+    color: whitesmoke;
+  }
+  .search-bar button {
+    border: 0;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+
+  }
+
+/* header and footer */
+.navbar-nav
+{
+    font-size: 12px;
+    font-weight: 500;
+}
+ #social-left
+ {
+     width: 300px !important;
+     font-size: 12px !important;
+ }
+#social-right
+{
+    margin-top: -35px !important;
+}
+.social-link {
+    width: 442px !important;
+    font-size: 17px !important;
+}
+#copyright
+{
+ font-size: 12px !important;
+}
+.table-responsive
+{
+ display: block !important;
+}
+/* executiveforum.html */
+.author {
+ width: 100% !important;
+ margin-left: 0px !important;
+}
+.num_rows {
+ width: 230px !important;
+}
+
+/* taluk.html */
+.tb_search_taluk
+{ float: right;
+margin-top: -52px !important;
+
+}
+/* executiveforumreg.html */
+#card-statecommite {
+ width: 370px !important;
+}
+/* login */
+#card-login
+{
+    width: 370px !important;
+}
+/* materimonialservices.html */
+#card-bg2
+{
+ margin-top: 20px !important;
+}
+/* viewprofile.html */
+.view_profile
+{
+ margin-left: 0px !important;
+ margin-right: 0px !important;
+
+}
+#card-bg {
+
+ width:430px !important;
+}
+.arrowBox {
+
+ width: 356px !important;
+
+}
+.custom-text2
+{
+ margin-top:  10px !important;
+}
+/* contact.html */
+.form-card {
+ background: linear-gradient(242deg, white, transparent) !important;
+ padding: 20px;
+ height: 629px !important;
+}
+
+#col-form
+{
+ margin-top: 30px !important;
+}
+
+.envelope
+{
+ margin-top: 30px !important;
+}
+.icon-contact1 , .icon-contact2,.icon-contact3 {
+ 
+ width: 65px !important;
+ height: 65px !important;
+ border-radius: 100px !important;
+ padding: 23px !important;
+ 
+}
+.icon-contact2,.icon-contact3 {
+ 
+ width: 65px !important;
+ height: 65px !important;
+ border-radius: 100px !important;
+ padding: 18px !important;
+ 
+}
+.icon
+{
+ text-align: center !important;
+}
+.icon_text
+{
+ text-align: center !important;
+ font-size: 14px !important;
+}
+.navbar-nav
+{
+   font-size: 11px !important;
+}
+.img-fluid
+{
+    width: 50px !important;
+    height: 50px !important;
+}
+}
+@media only screen
+and (min-device-width:540px)
+and (max-device-width:720px)
+{
+    .img-fluid
+{
+    width: 50px !important;
+    height: 50px !important;
+}
+    .icon-bar {
+        position: fixed;
+        top: 80%;
+       margin-left:-40px !important;
+        z-index:99999;
+        
+      } 
+    #tmp-card_row
+    {
+        width: 680px !important;
+        margin-left: -170px !important;
+    }
+    #col-health
+    {
+        margin-left: 80px !important;
+    }
+   
+    .text-padding {
+       
+        font-size: 14px !important;
+    }
+ 
+ /* header and footer */
+ .navbar-brand
+ {
+    width: 122px !important;
+    font-size: 9px !important;
+}
+ 
+ .navbar-nav
+ {
+    font-size: 9px !important;
+ }
+ #social-left
+ {
+     width: 400px !important;
+     font-size: 12px !important;
+ }
+#social-right
+{
+    margin-top: -34px !important;
+}
+.social-link {
+    width: 445px !important;
+    font-size: 17px !important;
+}
+#copyright
+{
+ font-size: 12px !important;
+}
+.table-responsive
+{
+ display: block !important;
+}
+/* executiveforum.html */
+.author {
+ width: 100% !important;
+ margin-left: 0px !important;
+}
+.num_rows {
+ width: 87px !important;
+}
+.tb_search {
+float: right;
+margin-top: -39px !important;
+
+}
+/* taluk.html */
+.tb_search_taluk
+{ float: right;
+margin-top: -52px !important;
+
+}
+/* executiveforumreg.html */
+#card-statecommite {
+ width: 370px !important;
+}
+/* login */
+#card-login {
+    width: 370px !important;
+   }
+/* materimonialservices.html */
+#card-bg2
+{
+ margin-top: 20px !important;
+}
+/* viewprofile.html */
+.view_profile
+{
+ margin-left: 0px !important;
+ margin-right: 0px !important;
+
+}
+#card-bg {
+
+ width:500px !important;
+}
+.arrowBox {
+
+ width: 410px !important;
+
+}
+.custom-text2
+{
+ margin-top:  10px !important;
+}
+/* contact.html */
+.form-card {
+ background: linear-gradient(242deg, white, transparent) !important;
+ padding: 20px;
+ height: 629px !important;
+}
+
+#col-form
+{
+ margin-top: 30px !important;
+}
+
+.envelope
+{
+ margin-top: 30px !important;
+}
+.icon-contact1 , .icon-contact2,.icon-contact3 {
+ 
+ width: 65px !important;
+ height: 65px !important;
+ border-radius: 100px !important;
+ padding: 23px !important;
+ 
+}
+.icon-contact2,.icon-contact3 {
+ 
+ width: 65px !important;
+ height: 65px !important;
+ border-radius: 100px !important;
+ padding: 18px !important;
+ 
+}
+.icon
+{
+ text-align: center !important;
+}
+.icon_text
+{
+ text-align: center !important;
+ font-size: 14px !important;
+}
+
+}
+@media only screen
+and (min-device-width:720px)
+and (max-device-width:760px)
+{
+    .icon-bar {
+        position: fixed;
+        top: 80%;
+       margin-left:-40px !important;
+        z-index:99999;
+        
+      } 
+    #tmp-card_row
+    {
+        width: 680px !important;
+        margin-left: -170px !important;
+    }
+    #col-health
+    {
+        margin-left: 80px !important;
+    }
+    #card-bg
+    {
+       width: 694px !important;
+    }
+
+    .text-padding {
+        
+        font-size: 14px !important;
+    }
+    .navbar-brand
+    {
+        width: 150px !important;
+        font-size: 15px !important;
+    }
+    #social-right
+    {
+        margin-top: -40px !important;   
+    }
+    .navbar-nav
+    {
+       font-size: 11px !important;
+    }
+    .social-link {
+        width:150px !important ;
+        font-size: 12px !important;
+    }
+   
+     .author {
+        width: 50% !important;
+        margin-left: 180px !important;
+    }
+   
+    .form-card {
+        background: linear-gradient(176deg, white, transparent);
+        padding: 20px;
+        height: 512px !important;
+    }
+    address {
+        margin-bottom: 1rem;
+        font-style: normal;
+        line-height: inherit;
+        font-size: 15px !important;
+    }
+    .tb_search
+{ float: right;
+margin-top: -37px !important;
+
+}
+.num_rows {
+    width: 48px !important;
+}
+}
+@media only screen
+and (min-device-width:760px)
+and (max-device-width:1024px)
+{
+    .quick_2 {
+        list-style-type: none;
+        display: contents !important;
+    }
+    .icon-bar {
+        position: fixed;
+        top: 80%;
+       margin-left:-40px !important;
+        z-index:99999;
+        
+      } 
+    #tmp-card_row
+    {
+        width: 680px !important;
+        margin-left: -170px !important;
+    }
+    #col-health
+    {
+        margin-left: 96px !important;
+    }
+    /* #card_bg {
+        margin-left: 50px !important;
+    } */
+   
+    .text-padding {
+        padding: 15px;
+        font-size: 14px !important;
+    }
+    .navbar-brand
+    {
+        width: 150px !important;
+        font-size: 15px !important;
+    }
+    .social-link {
+        width: 326px !important;
+        font-size: 11px !important;
+    }
+    .form-card {
+        background: linear-gradient(176deg, white, transparent);
+        padding: 20px;
+        height: 506px !important;
+    }
+    .quick_2 {
+        list-style-type: none;
+        font-size: 11px !important;
+    }
+    .navbar-nav
+    {
+        font-size: 13px !important;
+    }
+    .author {
+        width: 98% !important;
+        margin-left: 2px !important;
+    }
+    .num_rows {
+        width: 48px;
+    }
+}
