@@ -208,108 +208,131 @@
                              
                                 <div class="col-sm-12 col-12 col-md-12 col-lg-12 col-xl-12 p-2">
                                   <div class="form-card1">
-                                      <form method="post">
-                                        {% csrf_token %}
-                                        <div class="row ">
-                                          <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                            <label class="form-label">Name</label>
-                                            {{form.name}}
+                                    <form method="post">
+                                      {% csrf_token %}
+                                      <div class="container">
+                                          <div class="row">
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Name</label>
+                                                  {{ form.name }}
+                                              </div>
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Sex</label>
+                                                  {{ form.sex }}
+                                              </div>
                                           </div>
-                                          <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                            <label class="form-label"> Sex</label>  
-                                            {{form.sex}}
+                                  
+                                          <div class="row">
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Age</label>
+                                                  {{ form.age }}
+                                              </div>
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Date of Birth</label>
+                                                  {{ form.dob }}
+                                              </div>
                                           </div>
-                                        </div>
-                                        <div class="row">
-                                          <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                            <label class="form-label">Age</label>  
-                                            {{form.age}}
+                                  
+                                          <div class="row">
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Mobile</label>
+                                                  {{ form.mobile }}
+                                              </div>
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Address</label>
+                                                  {{ form.address }}
+                                              </div>
                                           </div>
-                                          <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                            <label class="form-label"> Dob</label>
-                                            {{form.dob}}
+                                  
+                                          <div class="row">
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Profession</label>
+                                                  {{ form.occupation }}
+                                              </div>
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                <label class="form-label">Total Family Members</label>
+                                                {{ form.family_members }}
+                                            </div>
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">District</label>
+                                                  {{ form.district }}
+                                              </div>
                                           </div>
-                                        </div>
-                                        <div class="row">
-                                          <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                            <label class="form-label"> Mobile</label>
-                                            {{form.mobile}}
+                                  
+                                          <div class="row">
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Sakha No</label>
+                                                  {{ form.sakha_no }}
+                                              </div>
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Union</label>
+                                                  {{ form.union }}
+                                              </div>
                                           </div>
-                                          <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                            <label class="form-label"> Address</label>
-                                            {{form.address}}
+                                  
+                                          <div class="row">
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">ID Proof</label>
+                                                  {{ form.id_proof }}
+                                              </div>
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">ID Proof No</label>
+                                                  {{ form.id_proof_no }}
+                                              </div>
                                           </div>
-                                        </div>
-                                        <div class="row">
-                                          <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                            <label class="form-label">Place</label>  
-                                            {{form.place}}
+                                  
+                                          <div class="row">
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Membership No</label>
+                                                  {{ form.membership_no }}
+                                              </div>
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Payment Details</label>
+                                                  {{ form.payment_details }}
+                                              </div>
                                           </div>
-                                          <div class="col-lg-6 col-md-6 col-sm-12 col-xl-6 p-2">
-                                            <label class="form-label"> District</label>  
-                                            {{form.district}}
+                                  
+                                          <div class="row">
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Status</label>
+                                                  {{ form.status }}
+                                              </div>
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Paid Month</label>
+                                                  {{ form.paid_month }}
+                                              </div>
                                           </div>
-                                        </div>
-                                        <div class="row">
-                                          <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                            <label class="form-label">Sakha no</label>  
-                                            {{form.sakha_no}}
+                                  
+                                          <div class="row">
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Insurance Status</label>
+                                                  {{ form.insurance_status }}
+                                              </div>
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Membership Renewal</label>
+                                                  {{ form.renewal }}
+                                              </div>
                                           </div>
-                                          <div class="col-lg-6 col-md-6 col-sm-12 col-xl-6 p-2">
-                                            <label class="form-label"> Union</label>  
-                                            {{form.union}}
+                                  
+                                          <div class="row">
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Data Entered By (Name)</label>
+                                                  {{ form.data_enter_by_name }}
+                                              </div>
+                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
+                                                  <label class="form-label">Data Entered By (Phone)</label>
+                                                  {{ form.data_enter_by_phone }}
+                                              </div>
                                           </div>
-                                        </div>
-                                   
-                                  <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                         <label class="form-label">ID Proof</label>
-                                          {{form.id_proof}}
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                      <label class="form-label">ID Proof No</label>  
-                                      {{form.id_proof_no}}
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                          <label class="form-label">Membership No</label>
-                                          {{form.membership_no}}
-                                    </div>
-                                    <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                      <label class="form-label">Payment details</label>
-                                        {{form.payment_details}}
-                                    </div>
-                                </div>
-
-                                <div class="row ">
-                                  <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                        <label class="form-label">Status</label>
-                                        {{form.status}}
-                                  </div>
-                          </div>
-                                   
-                                    
-                                        
-                            
-                          </div>
-                          
-                            
-                    
-                  </div>
-                                 
-                         <div class="row">
-                        
-                        <div class="col-lg-12 col-md-12 col-xl-12 col-12 p-2">
-                    
-                                <div class="float-right">
-                                  <input type="submit" class="btn btn-danger " namme="submit" value="submit">
-                                </div>
-                        </div>
-                        
-                       </div>
-                      
-                                          
-                                      </form>
+                                  
+                                          <div class="row mt-3">
+                                              <div class="col-12 text-right">
+                                                  <input type="submit" class="btn btn-danger" name="submit" value="Submit">
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </form>
+                                  
                                   </div>
                                       
                                 </div>

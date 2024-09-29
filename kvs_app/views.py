@@ -687,7 +687,7 @@ def district_admin_register(request):
                 user = User.objects.create_user(username = request.POST.get('username'), password = request.POST.get('password1'),email=request.POST.get('email'),is_staff=True)
                 district = request.POST.get('district')
                 extenduser = ExtendedUserModel(user = user , district = district)
-                extenduser.save();
+                extenduser.save()
                 print('user created')
                 auth.login(request,user)
                 # # MESSAGE SENDING CODE

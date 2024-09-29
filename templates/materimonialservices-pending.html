@@ -109,7 +109,7 @@
       
                     </ul>
               </li>
-              <li class="nav-item dropdown">
+              {% comment %} <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-white " id="nav-item" href="#" role="button" data-toggle="dropdown">Matrimonial</a>
                   <ul class="dropdown-menu sub">
                     <li><a class="dropdown-item text-white" href="{% url 'kvs_app:data_bank' %}">Brides</a></li>
@@ -123,7 +123,7 @@
               </li>
               <li class="nav-item" id="nav-item">
                 <a class="nav-link text-white" href="{% url 'kvs_app:data_bank_register' %}">Marriage Register</a>
-              </li>
+              </li> {% endcomment %}
               {% if user.is_authenticated %}
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-white " id="nav-item" href="{% url 'kvs_app:join_kvs' %}" role="button" data-toggle="dropdown">Join KVS</a>

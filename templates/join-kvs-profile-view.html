@@ -921,7 +921,7 @@
                   </li>
                 </ul>
               </li>
-              <li class="nav-item dropdown">
+              {% comment %} <li class="nav-item dropdown">
                 <a
                   class="nav-link dropdown-toggle text-white"
                   id="nav-item"
@@ -945,7 +945,7 @@
                       href="{% url 'kvs_app:grooms' %}"
                       >Grooms</a
                     >
-                  </li>
+                  </li> {% endcomment %}
                   {% if user.is_authenticated %}
                   <li>
                     <a
@@ -957,13 +957,13 @@
                   {% endif %}
                 </ul>
               </li>
-              <li class="nav-item" id="nav-item">
+              {% comment %} <li class="nav-item" id="nav-item">
                 <a
                   class="nav-link text-white"
                   href="{% url 'kvs_app:data_bank_register' %}"
                   >Marriage Register</a
                 >
-              </li>
+              </li> {% endcomment %}
               {% if user.is_authenticated %}
               <li class="nav-item dropdown">
                 <a
@@ -1108,7 +1108,7 @@
                     <h5 class="custom-text">Dob : {{i.dob}}</h5>
                     <h5 class="custom-text">Mobile : {{i.mobile}}</h5>
                     <h5 class="custom-text">Address : {{i.address}}</h5>
-                    <h5 class="custom-text">Place : {{i.place}}</h5>
+                    <h5 class="custom-text">Profession : {{i.occupation}}</h5>
                     <h5 class="custom-text">District : {{i.district}}</h5>
                     <h5 class="custom-text">Union : {{i.union}}</h5>
                     <h5 class="custom-text">Sakha No : {{i.sakha_no}}</h5>

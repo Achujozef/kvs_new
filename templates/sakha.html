@@ -205,7 +205,7 @@
                          <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                             <div class="float-right">
                                 {% if user.is_authenticated %}
-                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus  mx-3"></i>Add Member</button>
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus  mx-3"></i>Add New</button>
                                 {% endif %}
    
                                                             <!-- model add member -->      
@@ -225,15 +225,19 @@
                                                               <div class="row">
                                                                     <div class="col-lg-12 col-md-12 mt-3">
                                                                         {% comment %} <input type="text" class="form-control" name="name" placeholder="Enter Sakha Number"> {% endcomment %}
+                                                                        <label for="taluk">Enter Sakha Number</label>
                                                                         {{form.sakha_no}}
                                                                     </div>
                                                                     <div class="col-lg-12 col-md-12 mt-3">
+                                                                      <label for="taluk">Enter Sakha Name</label>
                                                                         {{form.sakaha_name}}
                                                                     </div>
                                                                     <div class="col-lg-12 col-md-12 mt-3">
+                                                                      <label for="taluk">Select District</label>
                                                                       {{form.district}}
                                                                   </div>
                                                                     <div class="col-lg-12 col-md-12 mt-3">
+                                                                      <label for="taluk">Enter Union</label>
                                                                         {{form.taluk}}
                                                                     </div>
                                                                     <div class=" col-12 col-sm-12 col-lg-12 col-md-12 mt-3">

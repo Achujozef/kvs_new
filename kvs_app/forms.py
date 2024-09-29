@@ -25,7 +25,7 @@ class TalukForm(forms.ModelForm):
             'name' : forms.TextInput(attrs={'class':'form-control','placeholder':'Name'}),
             'phone' : forms.NumberInput(attrs={'class':'form-control','placeholder':'Mobile'}),
             'district': forms.Select(attrs={'class':'form-control','placeholder':'District'}),
-            'taluk' : forms.Select(attrs={'class':'form-control','placeholder':'Place'})
+            'taluk' : forms.TextInput(attrs={'class':'form-control','placeholder':'Union'})
         }
 
 
@@ -38,7 +38,7 @@ class SakhaForm(forms.ModelForm):
         widgets = {
             'sakha_no' : forms.NumberInput(attrs={'class':'form-control','placeholder':'Sakha Number'}),
             'district': forms.Select(attrs={'class':'form-control'}),
-            'taluk' : forms.Select(attrs={'class':'form-control','placeholder':'Taluk'}),
+            'taluk' : forms.TextInput(attrs={'class':'form-control','placeholder':'Union'}),
             'sakaha_name' : forms.TextInput(attrs={'class':'form-control','placeholder':'Sakha Name'}),
         }
 
@@ -86,11 +86,11 @@ class DatabankAddForm(forms.ModelForm):
         fields = '__all__'
         exclude = ['status']
         widgets = {
-            'category' : forms.Select(attrs={'class':'form-control'}),
+            'category' : forms.TextInput(attrs={'class':'form-control'}),
             'name' : forms.TextInput(attrs={'class':'form-control',}),
             'mobile' : forms.NumberInput(attrs={'class':'form-control'}),
             'occupation' : forms.TextInput(attrs={'class':'form-control'}),
-            'district' : forms.TextInput(attrs={'class':'form-control'}),
+            'district' : forms.Select(attrs={'class':'form-control'}),
             'taluk' : forms.TextInput(attrs={'class':'form-control'}),
             'workplace' : forms.TextInput(attrs={'class':'form-control'}),
             'contact_person' : forms.TextInput(attrs={'class':'form-control'}),
@@ -101,12 +101,12 @@ class DatabankEditForm(forms.ModelForm):
         model = Databank
         fields = '__all__'
         widgets = {
-            'category' : forms.Select(attrs={'class':'form-control'}),
+            'category' : forms.TextInput(attrs={'class':'form-control'}),
             'name' : forms.TextInput(attrs={'class':'form-control',}),
             'mobile' : forms.NumberInput(attrs={'class':'form-control'}),
             'photo' : forms.ClearableFileInput(attrs={'class':'form-control'}),
             'occupation' : forms.TextInput(attrs={'class':'form-control'}),
-            'district' : forms.TextInput(attrs={'class':'form-control'}),
+            'district' : forms.Select(attrs={'class':'form-control'}),
             'taluk' : forms.TextInput(attrs={'class':'form-control'}),
             'workplace' : forms.TextInput(attrs={'class':'form-control'}),
             'contact_person' : forms.TextInput(attrs={'class':'form-control'}),
@@ -221,6 +221,8 @@ class Join_Kvs_Add_Form(forms.ModelForm):
             'mobile': forms.NumberInput(attrs={'class':'form-control'}),
             'address': forms.Textarea(attrs={'class':'form-control','rows':4}),
             'place': forms.TextInput(attrs={'class':'form-control'}),
+            'occupation': forms.TextInput(attrs={'class':'form-control'}),
+            'family_members': forms.TextInput(attrs={'class':'form-control'}),
             'taluk': forms.TextInput(attrs={'class':'form-control'}),
             'district': forms.Select(attrs={'class':'form-control'}),
             'union': forms.TextInput(attrs={'class':'form-control'}),
@@ -253,6 +255,8 @@ class Join_Kvs_Admin_Update(forms.ModelForm):
             'mobile': forms.NumberInput(attrs={'class':'form-control'}),
             'address': forms.Textarea(attrs={'class':'form-control','rows':4}),
             'place': forms.TextInput(attrs={'class':'form-control'}),
+            'occupation': forms.TextInput(attrs={'class':'form-control'}),
+            'family_members': forms.TextInput(attrs={'class':'form-control'}),
             'district': forms.Select(attrs={'class':'form-control'}),
             'union': forms.TextInput(attrs={'class':'form-control'}),
             'sakha_no': forms.TextInput(attrs={'class':'form-control'}),
@@ -262,4 +266,9 @@ class Join_Kvs_Admin_Update(forms.ModelForm):
             'status': forms.Select(attrs={'class':'form-control'}),
             'payment_details': forms.Select(attrs={'class':'form-control'}),
 
+            'paid_month': forms.Select(attrs={'class':'form-control'}),
+            'insurance_status': forms.Select(attrs={'class':'form-control'}),
+            'renewal': forms.Select(attrs={'class':'form-control'}),
+            'data_enter_by_name' : forms.TextInput(attrs={'class':'form-control'}),
+            'data_enter_by_phone' : forms.TextInput(attrs={'class':'form-control'}),
         }

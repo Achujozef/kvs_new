@@ -1167,9 +1167,9 @@
                                         style="color: red; font-weight: 500"
                                         >*</span
                                       >
-                                      Place</label
+                                      Profession</label
                                     >
-                                    {{form.place}}
+                                    {{form.occupation}}
                                   </div>
                                   <div class="col-lg-12 col-md-12 mt-3">
                                     <label class="form-label"
@@ -1292,7 +1292,7 @@
                     <tr>
                       <th class="text-center">Name</th>
                       <th class="text-center">District</th>
-                      <th class="text-center">Place</th>
+                      <th class="text-center">Membership No</th>
                       {% if user.is_authenticated and user.is_superuser %}
                       <th class="text-center">Action</th>
                       {% endif %}
@@ -1302,11 +1302,12 @@
                     {% for i in pending %}
                     <tr>
                       <th class="text-center">
-                        <a href="{% url "kvs_app:join_kvs_profile_view" i.id
-                        %}">{{i.name}}
+                        <a href="{% url "kvs_app:join_kvs_profile_view" i.id %}">
+                        
+                        {{i.name}}
                       </th>
                       <th class="text-center">{{i.district}}</th>
-                      <th class="text-center">{{i.place}}</th>
+                      <th class="text-center">{{i.membership_no}}</th>
                       {% if user.is_authenticated and user.is_superuser %}
                       <td class="text-center">
                         <ul class="nav justify-content-center">
@@ -1337,7 +1338,7 @@
                     <tr>
                       <th class="">Name</th>
                       <th class="">Mobile</th>
-                      <th class="">Place</th>
+                      <th class="">Occupation</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1345,7 +1346,7 @@
                     <tr>
                       <th class="">{{i.name}}</th>
                       <th class="">{{i.mobile}}</th>
-                      <th class="">{{i.place}}</th>
+                      <th class="">{{i.occupation}}</th>
                     </tr>
                     {% endfor %}
                   </tbody>

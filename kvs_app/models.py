@@ -60,7 +60,7 @@ class Taluk(models.Model):
         ('Kasaragod','Kasaragod'),
     )
     district = models.CharField(max_length=50,choices=DISTRICT_CHOICES)
-    taluk  = models.ForeignKey(Taluk_choices,on_delete=models.CASCADE,blank=False,null=False)
+    taluk  = models.CharField(max_length=50,blank=False,null=False)
 
 
 
@@ -86,7 +86,7 @@ class Sakha(models.Model):
         ('Kasaragod','Kasaragod'),
     )
     district = models.CharField(max_length=50,choices=DISTRICT_CHOICES)
-    taluk  = models.ForeignKey(Taluk_choices,on_delete=models.CASCADE,blank=False,null=False)
+    taluk  = models.CharField(max_length=50,blank=False,null=False)
 
 
 
@@ -295,7 +295,9 @@ class Join_Kvs(models.Model):
     dob = models.DateField(blank=True,null=True)
     mobile = models.CharField(max_length=10,blank=False,null=False)
     address = models.TextField(blank=False,null=False)
-    place = models.CharField(max_length=25,blank=False,null=False)
+    place = models.CharField(max_length=25,blank=True,null=True)
+    occupation = models.CharField(max_length=25,blank=True,null=True)
+    family_members = models.CharField(max_length=25,blank=True,null=True)
     # taluk = models.CharField(max_length=25,blank=False,null=False)
     DISTRICT_CHOICES = (
         ('Trivandrum','Trivandrum'),
@@ -346,11 +348,27 @@ class DataBankCategory(models.Model):
 class Databank(models.Model):
     def __str__(self):
         return self.name
-    category = models.ForeignKey(DataBankCategory,on_delete=models.CASCADE,max_length=50,blank=True,null=True)
+    DISTRICT_CHOICES = (
+        ('Trivandrum','Trivandrum'),
+        ('Kollam','Kollam'),
+        ('Pathanamthitta','Pathanamthitta'),
+        ('Alappuzha','Alappuzha'),
+        ('Kottayam','Kottayam'),
+        ('Idukki','Idukki'),
+        ('Ernakulam','Ernakulam'),
+        ('Thrissur','Thrissur'),
+        ('Palakkad','Palakkad'),
+        ('Malappuram','Malappuram'),
+        ('Kozhikode','Kozhikode'),
+        ('Wayanad','Wayanad'),
+        ('Kannur','Kannur'),
+        ('Kasaragod','Kasaragod'),
+    )
+    category = models.CharField(max_length=50,blank=True,null=True)
     name = models.CharField(max_length=50,blank=False,null=False)
     mobile = models.CharField(max_length=10,blank=False,null=False)
     occupation = models.CharField(max_length=50,blank=False,null=False)
-    district = models.CharField(max_length=50,blank=False,null=False)
+    district = models.CharField(max_length=250,choices=DISTRICT_CHOICES,blank=False,null=False)
     taluk = models.CharField(max_length=50,blank=False,null=False)
     workplace = models.CharField(max_length=50,blank=False,null=False)
     contact_person = models.CharField(max_length=50,blank=False,null=False)
