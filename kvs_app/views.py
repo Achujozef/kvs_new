@@ -626,7 +626,7 @@ def join_kvs_excel_report(request):
         if my_row.union == None:
             ws.write(row_num, 7, 'None', font_style)
         else:
-            ws.write(row_num, 7, my_row.union.name, font_style)
+            ws.write(row_num, 7, my_row.union, font_style)
         ws.write(row_num, 8, my_row.sakha_no, font_style)
         
     wb.save(response)
