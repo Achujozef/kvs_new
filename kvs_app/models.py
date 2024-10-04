@@ -331,6 +331,7 @@ class Join_Kvs(models.Model):
     paid_month = models.CharField(max_length=25,choices=paidmonth_choices,blank=True,null=True)
     status = models.CharField(max_length=25,choices=STATUS_CHOISES,default='Pending')
     data_enter_by_name = models.CharField(max_length=25,blank=True,null=True)
+    remark = models.TextField(blank=True,null=True)
     data_enter_by_phone = models.CharField(max_length=25,blank=True,null=True)
 
 
@@ -371,7 +372,7 @@ class Databank(models.Model):
     district = models.CharField(max_length=250,choices=DISTRICT_CHOICES,blank=False,null=False)
     taluk = models.CharField(max_length=50,blank=False,null=False)
     workplace = models.CharField(max_length=50,blank=False,null=False)
-    contact_person = models.CharField(max_length=50,blank=False,null=False)
+    contact_person = models.CharField(max_length=50,blank=True,null=True)
     status_choices = (
         ('Hide','Hide'),
         ('Unhide','Unhide')

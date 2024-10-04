@@ -86,14 +86,14 @@ class DatabankAddForm(forms.ModelForm):
         fields = '__all__'
         exclude = ['status']
         widgets = {
-            'category' : forms.TextInput(attrs={'class':'form-control'}),
-            'name' : forms.TextInput(attrs={'class':'form-control',}),
-            'mobile' : forms.NumberInput(attrs={'class':'form-control'}),
-            'occupation' : forms.TextInput(attrs={'class':'form-control'}),
-            'district' : forms.Select(attrs={'class':'form-control'}),
-            'taluk' : forms.TextInput(attrs={'class':'form-control'}),
-            'workplace' : forms.TextInput(attrs={'class':'form-control'}),
-            'contact_person' : forms.TextInput(attrs={'class':'form-control'}),
+            'category' : forms.TextInput(attrs={'class':'form-control','placeholder': 'eg : Gold Smith / Carpenter etc..'}),
+            'name' : forms.TextInput(attrs={'class':'form-control','placeholder': 'Enter Your Full Name'}),
+            'mobile' : forms.NumberInput(attrs={'class':'form-control','placeholder': 'Enter Mobile Number'}),
+            'occupation' : forms.TextInput(attrs={'class':'form-control','placeholder': 'Current Job'}),
+            'district' : forms.Select(attrs={'class':'form-control','placeholder': 'Enter Your District'}),
+            'taluk' : forms.TextInput(attrs={'class':'form-control','placeholder': 'Enter Your Taluk'}),
+            'workplace' : forms.TextInput(attrs={'class':'form-control','placeholder': 'Enter Your Work Place'}),
+            'contact_person' : forms.TextInput(attrs={'class':'form-control','placeholder': 'Yes / No'}),
         }
 
 class DatabankEditForm(forms.ModelForm):
@@ -237,7 +237,7 @@ class Join_Kvs_Add_Form(forms.ModelForm):
             'renewal': forms.Select(attrs={'class':'form-control'}),
             'data_enter_by_name' : forms.TextInput(attrs={'class':'form-control'}),
             'data_enter_by_phone' : forms.TextInput(attrs={'class':'form-control'}),
-
+            'remark' : forms.Textarea(attrs={'class':'form-control','rows':4}),
 
         }
 

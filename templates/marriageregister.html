@@ -216,7 +216,7 @@
                                         {% csrf_token %}
                                         <div class="row ">
                                                 <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                                    <label class="form-label"><span style="color:red;font-weight:600">*</span>Category</label>
+                                                    <label class="form-label"><span style="color:red;font-weight:600"></span>Category</label>
                                                       {{form.category}}
                                                 </div>
                                                 
@@ -233,9 +233,8 @@
                                           {% comment %} <input type="text" name="phone" placeholder="Enter The Contact" class="form-control"> {% endcomment %}
                                           </div>
                                           <div class="col-lg-6 col-md-6 col-xl-6 p-2 ">
-                                            <label class="form-label"><span style="color:red;font-weight:600">*</span>If Retired / In Service</label> 
+                                            <label class="form-label"><span style="color:red;font-weight:600"></span>If Retired / In Service</label> 
                                             {{form.contact_person}} 
-                                            {% comment %} <input type="text" name="Occupation" placeholder="Enter Education Occupation" class="form-control"> {% endcomment %}
                                         </div>  
                                           
                                         
@@ -246,7 +245,7 @@
                                                      {{form.occupation}}
                                               </div>
                                               <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                                  <label class="form-label">District</label>  
+                                                  <label class="form-label"><span style="color:red;font-weight:600">*</span>District</label>  
                                                   {{form.district}}
                                               </div>
                                               
@@ -255,11 +254,11 @@
                                           <div class="row">
                                         
                                               <div class="col-lg-6 col-md-6 col-sm-12 col-xl-6 p-2">
-                                                <label class="form-label">Taluk</label><br>  
+                                                <label class="form-label"><span style="color:red;font-weight:600">*</span>Taluk</label><br>  
                                                 {{form.taluk}}
                                               </div>
                                               <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                                <label class="form-label"><span style="color:red;font-weight:600">*</span>Place</label> 
+                                                <label class="form-label"><span style="color:red;font-weight:600">*</span>Work Place</label> 
                                                 {{form.workplace}} 
                                             </div>
                                         
