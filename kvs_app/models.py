@@ -318,7 +318,7 @@ class Join_Kvs(models.Model):
     district = models.CharField(max_length=50,choices=DISTRICT_CHOICES,blank=True,null=True)
     union = models.CharField(max_length=100,blank=True,null=True)
     sakha_no = models.CharField(max_length=25,blank=True,null=True)
-    id_proof = models.ForeignKey(Id_details_choices,on_delete=models.CASCADE,blank=True,null=True)
+    id_proof = models.ForeignKey(Id_details_choices, on_delete=models.SET_NULL, null=True, blank=True)
     id_proof_no = models.CharField(max_length=25,blank=True,null=True)
     payment_details = models.ForeignKey(Payment_details_choices,on_delete=models.CASCADE,blank=True,null=True)
     STATUS_CHOISES = (
