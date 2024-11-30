@@ -1360,7 +1360,7 @@
                     <tr>
                       <th class="text-center">Name</th>
                       <th class="text-center">District</th>
-                      {% comment %} <th class="text-center">Occupation</th> {% endcomment %}
+                       <th class="text-center">Union</th> 
                       <th class="text-center">Membership No</th>
                       {% if user.is_authenticated and user.is_superuser %}
                       <th class="text-center">Action</th>
@@ -1378,7 +1378,7 @@
                       {% comment %}
                       <th class="text-center">{{i.union}}</th>
                       {% endcomment %}
-                      {% comment %} <th class="text-center">{{i.occupation}}</th> {% endcomment %}
+                       <th class="text-center">{{i.union}}</th> 
                       <th class="text-center">{{i.membership_no}}</th>
                       {% if user.is_authenticated and user.is_superuser %}
                       <td class="text-center">
@@ -1413,7 +1413,7 @@
                     <tr>
                       <th class="">Name</th>
                       <th class="">District</th>
-                      {% comment %} <th class="">Occupation</th> {% endcomment %}
+                      <th class="">Union</th> 
                       <th class="">Membership No</th>
                     </tr>
                   </thead>
@@ -1422,7 +1422,7 @@
                     <tr>
                       <th class="">{{i.name}}</th>
                       <th class="">{{i.district}}</th>
-                      {% comment %} <th class="">{{i.occupation}}</th> {% endcomment %}
+                       <th class="">{{i.union}}</th>
                       <th class="">{{i.membership_no}}</th>
                     </tr>
                     {% endfor %}
@@ -1488,6 +1488,11 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'kvs_app:contact' %}"
                     >Contact</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'kvs_app:join_kvs' %}"
+                    >Add Member</a
                   >
                 </li>
               </ul>
