@@ -377,5 +377,5 @@ class Databank(models.Model):
         ('Hide','Hide'),
         ('Unhide','Unhide')
     )
-    status = models.CharField(max_length=25,choices=status_choices,default='Hide')
+    status = models.CharField(max_length=25,choices=status_choices,default='Unhide')
     
