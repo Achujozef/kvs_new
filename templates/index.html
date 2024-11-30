@@ -230,7 +230,7 @@ From “Artisans of India” – by Dr. P.N. Sankaran.
                  </div>
          </div>
   </div>
-</section>
+{% comment %} </section>
 <!-- end Abouts -->
 <!-- services -->
 <section id="services-wrapper">
@@ -283,7 +283,7 @@ style="text-align: -webkit-center;">
      </div>
 
 </div>
-</section>
+</section> {% endcomment %}
 
 <!-- end services -->
 {% for message in messages %}
@@ -323,6 +323,11 @@ style="text-align: -webkit-center;">
                             <li class="nav-item"><a class="nav-link" href="{% url 'kvs_app:executiveforum' %}">Executive Forum</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'kvs_app:data_bank_register' %}">Data Bank Register</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'kvs_app:contact' %}">Contact</a></li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="{% url 'kvs_app:join_kvs' %}"
+                                >Add Member</a
+                              >
+                            </li>
                       </ul>
                   </div>
                 </div>

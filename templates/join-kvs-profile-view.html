@@ -806,6 +806,21 @@
   </head>
 
   <body class="materimonialservices">
+    <section style="background-color: #da8616">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="float-right">
+              <div class="icon-bar">
+                <a href="https://wa.me/919995487001?text="
+                  ><img src="{% static 'images/whatsapp.png' %}"
+                /></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <header>
       <div class="social-head">
         <div class="container-fluid">
@@ -814,9 +829,11 @@
               <div id="social-left">
                 <ul class="nav">
                   <li class="nav-item">
-                    <a class="nav-link text-white"
+                    <a
+                      class="nav-link text-white"
+                      href="mailto:kvsorg277@gmail.com"
                       ><i class="fa fa-envelope me-2"></i
-                      >keralaviswakarmasabhas277@gmail.com</a
+                      >kvsorg277@gmail.com</a
                     >
                   </li>
                 </ul>
@@ -866,7 +883,10 @@
       <nav class="navbar navbar-expand-lg bg-color navbar-dark">
         <div class="container-fluid">
           <a class="navbar-brand" href="{% url 'kvs_app:index' %}"
-            >Kerala Viswakarma Sabha (KVS)</a
+            ><img src="{% static 'images/logo.jpeg' %}" class="logo" /><span
+              class="me-2"
+              >kerala Viswakarma Sabha</span
+            ></a
           >
           <button
             class="navbar-toggler"
@@ -921,49 +941,43 @@
                   </li>
                 </ul>
               </li>
-              {% comment %} <li class="nav-item dropdown">
+              <li class="nav-item dropdown">
                 <a
-                  class="nav-link dropdown-toggle text-white"
+                  class="nav-link text-white dropdown-toggle"
                   id="nav-item"
                   href="#"
                   role="button"
                   data-toggle="dropdown"
-                  >Matrimonial</a
+                  href="{% url 'kvs_app:data_bank' %}"
+                  >Data Bank</a
                 >
                 <ul class="dropdown-menu sub">
                   <li>
                     <a
                       class="dropdown-item text-white"
                       href="{% url 'kvs_app:data_bank' %}"
-                      >Brides</a
+                      >Data bank List</a
                     >
                   </li>
 
-                  <li>
-                    <a
-                      class="dropdown-item text-white"
-                      href="{% url 'kvs_app:grooms' %}"
-                      >Grooms</a
-                    >
-                  </li> {% endcomment %}
                   {% if user.is_authenticated %}
                   <li>
                     <a
                       class="dropdown-item text-white"
-                      href="{% url 'kvs_app:pending' %}"
-                      >Pendings</a
+                      href="{% url 'kvs_app:data_bank_hide' %}"
+                      >Hided List</a
                     >
                   </li>
                   {% endif %}
                 </ul>
               </li>
-              {% comment %} <li class="nav-item" id="nav-item">
+              <li class="nav-item" id="nav-item">
                 <a
                   class="nav-link text-white"
                   href="{% url 'kvs_app:data_bank_register' %}"
-                  >Marriage Register</a
+                  >Data Bank Register</a
                 >
-              </li> {% endcomment %}
+              </li>
               {% if user.is_authenticated %}
               <li class="nav-item dropdown">
                 <a
@@ -972,7 +986,7 @@
                   href="{% url 'kvs_app:join_kvs' %}"
                   role="button"
                   data-toggle="dropdown"
-                  >Join KVS</a
+                  >Members</a
                 >
                 <ul class="dropdown-menu sub">
                   <li>
@@ -996,7 +1010,7 @@
                 <a
                   class="nav-link text-white"
                   href="{% url 'kvs_app:join_kvs' %}"
-                  >Join KVS</a
+                  >Members</a
                 >
               </li>
               {% endif %}
@@ -1057,7 +1071,9 @@
             class="col-lg-12 col-xl-12 col-md-12 col-sm-12 col-12"
             id="head-breadcrump"
           >
-            <h1 class="text-center text-white">Materimonial Services</h1>
+          {% for i in kvs %}
+            <h1 class="text-center text-white">  Member :  {{i.name}}</h1>
+            {%endfor%}
             <div class="text-breadcrumb3">
               <ul class="nav justify-content-center">
                 <li class="nav-item">
@@ -1068,7 +1084,7 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'kvs_app:data_bank' %}"
-                    >Materimonial Services</a
+                    >Member</a
                   >
                 </li>
               </ul>
@@ -1103,24 +1119,35 @@
                   </div>
                   <div class="card-body">
                     <h5 class="custom-text">Name : {{i.name}}</h5>
-                    <h5 class="custom-text">Sex : {{i.sex}}</h5>
-                    <h5 class="custom-text">Age : {{i.age}}</h5>
-                    <h5 class="custom-text">Dob : {{i.dob}}</h5>
-                    <h5 class="custom-text">Mobile : {{i.mobile}}</h5>
+                    <h5 class="custom-text">Membership No : {{i.membership_no}}</h5>
+                    <h5 class="custom-text">Union : {{i.union}}</h5>
+                    <h5 class="custom-text">Sakha: {{i.sakha_no}}</h5>
                     <h5 class="custom-text">Address : {{i.address}}</h5>
                     <h5 class="custom-text">Profession : {{i.occupation}}</h5>
-                    <h5 class="custom-text">District : {{i.district}}</h5>
-                    <h5 class="custom-text">Union : {{i.union}}</h5>
-                    <h5 class="custom-text">Sakha No : {{i.sakha_no}}</h5>
-                    <h5 class="custom-text">ID Proof : {{i.id_proof}}</h5>
-                    <h5 class="custom-text">ID Proof No : {{i.id_proof_no}}</h5>
+                    <h5 class="custom-text">Mobile : {{i.mobile}}</h5>
                     <h5 class="custom-text">
                       Payment Details : {{i.payment_details}}
                     </h5>
-                    <h5 class="custom-text">
-                      Membership No : {{i.membership_no}}
-                    </h5>
+                    <h5 class="custom-text">Paid Month : {{i.paid_month}}</h5>
+                    <h5 class="custom-text">Insurance Status : {{i.insurance_status}}</h5>
+                    <h5 class="custom-text">Membership Renewal : {{i.renewal}}</h5>
+                    <h5 class="custom-text">Remark : {{i.remark}}</h5>
                     <h5 class="custom-text">Status : {{i.status}}</h5>
+
+
+                    {% comment %} <h5 class="custom-text">Sex : {{i.sex}}</h5>
+                    <h5 class="custom-text">Age : {{i.age}}</h5>
+                    <h5 class="custom-text">Dob : {{i.dob}}</h5>
+
+
+                    <h5 class="custom-text">District : {{i.district}}</h5>
+
+
+                    <h5 class="custom-text">ID Proof : {{i.id_proof}}</h5>
+                    <h5 class="custom-text">ID Proof No : {{i.id_proof_no}}</h5> {% endcomment %}
+
+                    
+                    
                   </div>
                 </div>
               </div>
@@ -1183,6 +1210,11 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'kvs_app:contact' %}"
                     >Contact</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'kvs_app:join_kvs' %}"
+                    >Add Member</a
                   >
                 </li>
               </ul>
