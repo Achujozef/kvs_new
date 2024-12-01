@@ -23,10 +23,20 @@ class StateCommitie(models.Model):
         verbose_name_plural = 'State Commitie'
     def __str__(self):
         return self.name
+    POSITION_CHOICES = [
+        ('president', 'President'),
+        ('secretary', 'Secretary'),
+        ('treasurer', 'Treasurer'),
+        ('vice_president', 'Vice President'),
+        ('joint_secretary', 'Joint Secretary'),
+        ('working_committee', 'Working Committee'),
+    ]
     name = models.CharField(max_length=50,blank=False,null=False)
     phone = models.CharField(max_length=10,blank=False,null=False)
     place = models.CharField(max_length=250,blank=False,null=False)
     photo = models.ImageField(upload_to='state commitie', blank=True,null=True)
+    position = models.CharField(max_length=20,choices=POSITION_CHOICES,default='working_committee', blank=True,null=True)
+
 
 
 

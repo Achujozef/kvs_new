@@ -13,6 +13,7 @@ class StateCommiteForm(forms.ModelForm):
             'phone' : forms.NumberInput(attrs={'class':'form-control','placeholder':'Mobile'}),
             'place' : forms.TextInput(attrs={'class':'form-control','placeholder':'Place'}),
             'photo' : forms.ClearableFileInput(attrs={'class':'form-control'}),
+            'position': forms.Select(attrs={'class': 'form-control'}),
         }
 
 

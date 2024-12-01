@@ -197,10 +197,146 @@
 <div class="pt-5"></div>
 <section>
   <div class="container">
+    <!-- First Row: President, Secretary, Treasurer -->
+    <div class="row mt-4">
+        <!-- Presidents -->
+        <div class="col-lg-4 col-md-6 mb-4">
+          {% for i in presidents %}
+          <div class="card text-center">
+              <div class="card-body">
+                  {% if i.photo %}
+                      <img src="{{ i.photo.url }}" class="card-img-top img-fluid mb-3" alt="{{ i.name }}" style="height: 200px; width: 40%; object-fit: cover;">
+                  {% else %}
+                      <img src="{% static 'default-profile.png' %}" class="card-img-top img-fluid mb-3" alt="No Image" style="height: 200px; width: 100%; object-fit: cover;">
+                  {% endif %}
+                  <h5 class="card-title">{{ i.name }}</h5>
+                  <p class="card-text"><strong>Position:</strong> {{ i.get_position_display  }}</p>
+                  <p class="card-text"><strong>Mobile:</strong> {{ i.phone }}</p>
+                  <p class="card-text"><strong>Place:</strong> {{ i.place }}</p>
+                  
+                  {% if user.is_authenticated and user.is_superuser %}
+                      <a href="{% url 'kvs_app:executiveforum_update' i.id %}" class="btn btn-success me-2"><i class="fa fa-edit"></i> Edit</a>
+                      <a href="{% url 'kvs_app:executiveforum_delete' i.id %}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                  {% endif %}
+              </div>
+          </div>
+          {% endfor %}
+      </div>
+      
+        <!-- Secretaries -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            {% for i in secretaries %}
+            <div class="card text-center">
+                <div class="card-body">
+                    {% if i.photo %}
+                    <img src="{{ i.photo.url }}" class="card-img-top img-fluid mb-3" alt="{{ i.name }}" style="height: 200px; width: 40%; object-fit: cover;">
+                    {% else %}
+                        <img src="{% static 'default-profile.png' %}" class="card-img-top img-fluid mb-3" alt="No Image" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <h5 class="card-title">{{ i.name }}</h5>
+                    <p class="card-text"><strong>Position:</strong> {{ i.get_position_display  }}</p>
+                    <p class="card-text"><strong>Mobile:</strong> {{ i.phone }}</p>
+                    <p class="card-text"><strong>Place:</strong> {{ i.place }}</p>
+                    
+                    {% if user.is_authenticated and user.is_superuser %}
+                        <a href="{% url 'kvs_app:executiveforum_update' i.id %}" class="btn btn-success me-2"><i class="fa fa-edit"></i> Edit</a>
+                        <a href="{% url 'kvs_app:executiveforum_delete' i.id %}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Treasurers -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            {% for i in treasurers %}
+            <div class="card text-center">
+                <div class="card-body">
+                    {% if i.photo %}
+                    <img src="{{ i.photo.url }}" class="card-img-top img-fluid mb-3" alt="{{ i.name }}" style="height: 200px; width: 40%; object-fit: cover;">
+                    {% else %}
+                        <img src="{% static 'default-profile.png' %}" class="card-img-top img-fluid mb-3" alt="No Image" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <h5 class="card-title">{{ i.name }}</h5>
+                    <p class="card-text"><strong>Position:</strong> {{ i.get_position_display  }}</p>
+                    <p class="card-text"><strong>Mobile:</strong> {{ i.phone }}</p>
+                    <p class="card-text"><strong>Place:</strong> {{ i.place }}</p>
+                    
+                    {% if user.is_authenticated and user.is_superuser %}
+                        <a href="{% url 'kvs_app:executiveforum_update' i.id %}" class="btn btn-success me-2"><i class="fa fa-edit"></i> Edit</a>
+                        <a href="{% url 'kvs_app:executiveforum_delete' i.id %}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Second Row: Vice Presidents and Joint Secretaries -->
+    <div class="row mt-4">
+      {% for i in vice_presidents %}
+          {% if forloop.counter0|divisibleby:4 and not forloop.first %}
+              </div> <!-- Close previous row -->
+              <div class="row mt-4"> <!-- Start a new row for the next 4 cards -->
+          {% endif %}
+          <div class="col-lg-3 col-md-3 mb-4">
+              <div class="card text-center">
+                  <div class="card-body">
+                      {% if i.photo %}
+                      <img src="{{ i.photo.url }}" class="card-img-top img-fluid mb-3" alt="{{ i.name }}" style="height: 200px; width: 40%; object-fit: cover;">
+                      {% else %}
+                          <img src="{% static 'default-profile.png' %}" class="card-img-top img-fluid mb-3" alt="No Image" style="height: 200px; object-fit: cover;">
+                      {% endif %}
+                      <h5 class="card-title">{{ i.name }}</h5>
+                      <p class="card-text"><strong>Position:</strong> {{ i.get_position_display  }}</p>
+                      <p class="card-text"><strong>Mobile:</strong> {{ i.phone }}</p>
+                      <p class="card-text"><strong>Place:</strong> {{ i.place }}</p>
+                      
+                      {% if user.is_authenticated and user.is_superuser %}
+                          <a href="{% url 'kvs_app:executiveforum_update' i.id %}" class="btn btn-success me-2"><i class="fa fa-edit"></i> Edit</a>
+                          <a href="{% url 'kvs_app:executiveforum_delete' i.id %}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                      {% endif %}
+                  </div>
+              </div>
+          </div>
+      {% endfor %}
+  
+      {% for i in joint_secretaries %}
+          {% if forloop.counter0|divisibleby:4 and not forloop.first %}
+              </div> <!-- Close previous row -->
+              <div class="row mt-4"> <!-- Start a new row for the next 4 cards -->
+          {% endif %}
+          <div class="col-lg-3 col-md-3 mb-4">
+              <div class="card text-center">
+                  <div class="card-body">
+                      {% if i.photo %}
+                      <img src="{{ i.photo.url }}" class="card-img-top img-fluid mb-3" alt="{{ i.name }}" style="height: 200px; width: 40%; object-fit: cover;">
+                      {% else %}
+                          <img src="{% static 'default-profile.png' %}" class="card-img-top img-fluid mb-3" alt="No Image" style="height: 200px; object-fit: cover;">
+                      {% endif %}
+                      <h5 class="card-title">{{ i.name }}</h5>
+                      <p class="card-text"><strong>Position:</strong> {{ i.get_position_display  }}</p>
+                      <p class="card-text"><strong>Mobile:</strong> {{ i.phone }}</p>
+                      <p class="card-text"><strong>Place:</strong> {{ i.place }}</p>
+                      
+                      {% if user.is_authenticated and user.is_superuser %}
+                          <a href="{% url 'kvs_app:executiveforum_update' i.id %}" class="btn btn-success me-2"><i class="fa fa-edit"></i> Edit</a>
+                          <a href="{% url 'kvs_app:executiveforum_delete' i.id %}" class="btn btn-danger"><i class="fa fa-trash"></i> Delete</a>
+                      {% endif %}
+                  </div>
+              </div>
+          </div>
+      {% endfor %}
+  </div>
+  
+  
+</div>
+
+  <div class="container">
     <div class="row">
                <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                 <div class="text-center">
-                <a href="#demo" class="btn btn-primary buttton justify-content-center" data-toggle="collapse">State Commitee</a></div>
+                <a href="#demo" class="btn btn-primary buttton justify-content-center" data-toggle="collapse">Click to View The Working Commitee</a></div>
                   <div id="demo" class="collapse">
                         
                     <div class="mt-3"></div>
@@ -245,6 +381,9 @@
                                         {% comment %} <input type="text" class="form-control" name="place" placeholder="Enter place"> {% endcomment %}
                                         {{form.photo}}
                                     </div>
+                                    <div class="col-lg-12 col-md-12 mt-3">
+                                      {{ form.position }} <!-- Added position field -->
+                                  </div>
                                       <div class=" col-12 col-sm-12 col-lg-12 col-md-12 mt-3">
                                           <div class="float-right">
                                               <input type="submit" class=" btn btn-warning"value="submit">
@@ -314,7 +453,7 @@
                                                           </tr>
                                                           </thead>
                                                           <tbody>
-                                                          {% for i in state_commite %}
+                                                          {% for i in working_committee %}
                                                           <tr>
                                                               <td class="text-center">{{i.name}}</td>
                                                               <td class="text-center">{{i.phone}}</td>

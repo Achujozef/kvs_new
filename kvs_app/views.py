@@ -26,14 +26,36 @@ def index(request):
 
 def executiveforum(request):
     if request.method == 'POST':
-        form = StateCommiteForm(request.POST,request.FILES)
+        form = StateCommiteForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('kvs_app:executiveforum')
     else:
         form = StateCommiteForm()
+
+    # Fetching all positions separately
+    presidents = StateCommitie.objects.filter(position='president').order_by('-id')
+    secretaries = StateCommitie.objects.filter(position='secretary').order_by('-id')
+    treasurers = StateCommitie.objects.filter(position='treasurer').order_by('-id')
+    vice_presidents = StateCommitie.objects.filter(position='vice_president').order_by('-id')
+    joint_secretaries = StateCommitie.objects.filter(position='joint_secretary').order_by('-id')
+    working_committee = StateCommitie.objects.filter(position='working_committee').order_by('-id')
+
     state_commite = StateCommitie.objects.all().order_by('-id')
-    return render(request,'executiveforum.html',{'form':form,'state_commite':state_commite})
+
+    return render(request, 'executiveforum.html', 
+        {
+            'form': form,
+            'state_commite': state_commite,
+            'presidents': presidents,
+            'secretaries': secretaries,
+            'treasurers': treasurers,
+            'vice_presidents': vice_presidents,
+            'joint_secretaries': joint_secretaries,
+            'working_committee': working_committee
+        }
+    )
+
 
 
 def executiveforum_update(request,update_id):
@@ -480,7 +502,6 @@ def insurance_update(request,update_id):
         membership_list = Join_Kvs.objects.filter(status='Approved').order_by('-id')
         return render(request,'join-kvs.html',{'form':form,'membership_list':membership_list})
 
-
 def join_kvs(request):
     if request.method == 'POST':
         form = Join_Kvs_Add_Form(request.POST)
@@ -488,27 +509,37 @@ def join_kvs(request):
             data = form.save(commit=False)
             username = request.user.username
             if username:
-                staff_name = User.objects.get(username = username)
+                staff_name = User.objects.get(username=username)
                 data.added_by = staff_name
                 data.save()
             else:
                 data.save()
-            messages.success(request,'Membership will be Approved only after verification of Admin')
+            messages.success(request, 'Membership will be Approved only after verification of Admin')
             return redirect('kvs_app:join_kvs')
     else:
         form = Join_Kvs_Add_Form()
+
+    # Get the filter value from the request, defaulting to "All"
+    renewal_filter = request.GET.get('renewal', 'All')
+
     if request.user.is_superuser:
-        membership_list = Join_Kvs.objects.filter(status='Approved').order_by('-id')
-        return render(request,'join-kvs.html',{'form':form,'membership_list':membership_list})
+        if renewal_filter == 'All':
+            membership_list = Join_Kvs.objects.filter(status='Approved').order_by('-id')
+        else:
+            membership_list = Join_Kvs.objects.filter(status='Approved', renewal=renewal_filter).order_by('-id')
     elif request.user.is_staff:
         district = request.user.extendedusermodel.district
-        membership_list = Join_Kvs.objects.filter(status='Approved',district=district).order_by('-id')
-        return render(request,'join-kvs.html',{'form':form,'membership_list':membership_list})
+        if renewal_filter == 'All':
+            membership_list = Join_Kvs.objects.filter(status='Approved', district=district).order_by('-id')
+        else:
+            membership_list = Join_Kvs.objects.filter(status='Approved', district=district, renewal=renewal_filter).order_by('-id')
     else:
-        membership_list = Join_Kvs.objects.filter(status='Approved').order_by('-id')
-        return render(request,'join-kvs.html',{'form':form,'membership_list':membership_list})
-    
+        if renewal_filter == 'All':
+            membership_list = Join_Kvs.objects.filter(status='Approved').order_by('-id')
+        else:
+            membership_list = Join_Kvs.objects.filter(status='Approved', renewal=renewal_filter).order_by('-id')
 
+    return render(request, 'join-kvs.html', {'form': form, 'membership_list': membership_list})
 
     
 
