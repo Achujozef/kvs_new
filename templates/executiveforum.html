@@ -205,14 +205,14 @@
           <div class="card text-center">
               <div class="card-body">
                   {% if i.photo %}
-                      <img src="{{ i.photo.url }}" class="card-img-top img-fluid mb-3" alt="{{ i.name }}" style="height: 200px; width: 40%; object-fit: cover;">
+                      <img src="{{ i.photo.url }}" class="card-img-top img-fluid mb-3" alt="{{ i.name }}" style="height: 200px; width: 50%; object-fit: cover;">
                   {% else %}
                       <img src="{% static 'default-profile.png' %}" class="card-img-top img-fluid mb-3" alt="No Image" style="height: 200px; width: 100%; object-fit: cover;">
                   {% endif %}
                   <h5 class="card-title">{{ i.name }}</h5>
-                  <p class="card-text"><strong>Position:</strong> {{ i.get_position_display  }}</p>
-                  <p class="card-text"><strong>Mobile:</strong> {{ i.phone }}</p>
-                  <p class="card-text"><strong>Place:</strong> {{ i.place }}</p>
+                  <p class="card-text"><strong></strong> {{ i.get_position_display  }}</p>
+                  <p class="card-text"><strong></strong> {{ i.phone }}</p>
+                  <p class="card-text"><strong></strong> {{ i.place }}</p>
                   
                   {% if user.is_authenticated and user.is_superuser %}
                       <a href="{% url 'kvs_app:executiveforum_update' i.id %}" class="btn btn-success me-2"><i class="fa fa-edit"></i> Edit</a>
@@ -229,14 +229,14 @@
             <div class="card text-center">
                 <div class="card-body">
                     {% if i.photo %}
-                    <img src="{{ i.photo.url }}" class="card-img-top img-fluid mb-3" alt="{{ i.name }}" style="height: 200px; width: 40%; object-fit: cover;">
+                    <img src="{{ i.photo.url }}" class="card-img-top img-fluid mb-3" alt="{{ i.name }}" style="height: 200px; width: 50%; object-fit: cover;">
                     {% else %}
                         <img src="{% static 'default-profile.png' %}" class="card-img-top img-fluid mb-3" alt="No Image" style="height: 200px; object-fit: cover;">
                     {% endif %}
                     <h5 class="card-title">{{ i.name }}</h5>
-                    <p class="card-text"><strong>Position:</strong> {{ i.get_position_display  }}</p>
-                    <p class="card-text"><strong>Mobile:</strong> {{ i.phone }}</p>
-                    <p class="card-text"><strong>Place:</strong> {{ i.place }}</p>
+                    <p class="card-text"><strong></strong> {{ i.get_position_display  }}</p>
+                    <p class="card-text"><strong></strong> {{ i.phone }}</p>
+                    <p class="card-text"><strong></strong> {{ i.place }}</p>
                     
                     {% if user.is_authenticated and user.is_superuser %}
                         <a href="{% url 'kvs_app:executiveforum_update' i.id %}" class="btn btn-success me-2"><i class="fa fa-edit"></i> Edit</a>
@@ -253,14 +253,14 @@
             <div class="card text-center">
                 <div class="card-body">
                     {% if i.photo %}
-                    <img src="{{ i.photo.url }}" class="card-img-top img-fluid mb-3" alt="{{ i.name }}" style="height: 200px; width: 40%; object-fit: cover;">
+                    <img src="{{ i.photo.url }}" class="card-img-top img-fluid mb-3" alt="{{ i.name }}" style="height: 200px; width: 50%; object-fit: cover;">
                     {% else %}
                         <img src="{% static 'default-profile.png' %}" class="card-img-top img-fluid mb-3" alt="No Image" style="height: 200px; object-fit: cover;">
                     {% endif %}
                     <h5 class="card-title">{{ i.name }}</h5>
-                    <p class="card-text"><strong>Position:</strong> {{ i.get_position_display  }}</p>
-                    <p class="card-text"><strong>Mobile:</strong> {{ i.phone }}</p>
-                    <p class="card-text"><strong>Place:</strong> {{ i.place }}</p>
+                    <p class="card-text"><strong></strong> {{ i.get_position_display  }}</p>
+                    <p class="card-text"><strong></strong> {{ i.phone }}</p>
+                    <p class="card-text"><strong></strong> {{ i.place }}</p>
                     
                     {% if user.is_authenticated and user.is_superuser %}
                         <a href="{% url 'kvs_app:executiveforum_update' i.id %}" class="btn btn-success me-2"><i class="fa fa-edit"></i> Edit</a>
@@ -283,14 +283,14 @@
               <div class="card text-center">
                   <div class="card-body">
                       {% if i.photo %}
-                      <img src="{{ i.photo.url }}" class="card-img-top img-fluid mb-3" alt="{{ i.name }}" style="height: 200px; width: 40%; object-fit: cover;">
+                      <img src="{{ i.photo.url }}" class="card-img-top img-fluid mb-3" alt="{{ i.name }}" style="height: 200px; width: 50%; object-fit: cover;">
                       {% else %}
                           <img src="{% static 'default-profile.png' %}" class="card-img-top img-fluid mb-3" alt="No Image" style="height: 200px; object-fit: cover;">
                       {% endif %}
                       <h5 class="card-title">{{ i.name }}</h5>
-                      <p class="card-text"><strong>Position:</strong> {{ i.get_position_display  }}</p>
-                      <p class="card-text"><strong>Mobile:</strong> {{ i.phone }}</p>
-                      <p class="card-text"><strong>Place:</strong> {{ i.place }}</p>
+                      <p class="card-text"><strong></strong> {{ i.get_position_display  }}</p>
+                      <p class="card-text"><strong></strong> {{ i.phone }}</p>
+                      <p class="card-text"><strong></strong> {{ i.place }}</p>
                       
                       {% if user.is_authenticated and user.is_superuser %}
                           <a href="{% url 'kvs_app:executiveforum_update' i.id %}" class="btn btn-success me-2"><i class="fa fa-edit"></i> Edit</a>
@@ -310,14 +310,14 @@
               <div class="card text-center">
                   <div class="card-body">
                       {% if i.photo %}
-                      <img src="{{ i.photo.url }}" class="card-img-top img-fluid mb-3" alt="{{ i.name }}" style="height: 200px; width: 40%; object-fit: cover;">
+                      <img src="{{ i.photo.url }}" class="card-img-top img-fluid mb-3" alt="{{ i.name }}" style="height: 200px; width: 50%; object-fit: cover;">
                       {% else %}
                           <img src="{% static 'default-profile.png' %}" class="card-img-top img-fluid mb-3" alt="No Image" style="height: 200px; object-fit: cover;">
                       {% endif %}
                       <h5 class="card-title">{{ i.name }}</h5>
-                      <p class="card-text"><strong>Position:</strong> {{ i.get_position_display  }}</p>
-                      <p class="card-text"><strong>Mobile:</strong> {{ i.phone }}</p>
-                      <p class="card-text"><strong>Place:</strong> {{ i.place }}</p>
+                      <p class="card-text"><strong></strong> {{ i.get_position_display  }}</p>
+                      <p class="card-text"><strong></strong> {{ i.phone }}</p>
+                      <p class="card-text"><strong> </strong> {{ i.place }}</p>
                       
                       {% if user.is_authenticated and user.is_superuser %}
                           <a href="{% url 'kvs_app:executiveforum_update' i.id %}" class="btn btn-success me-2"><i class="fa fa-edit"></i> Edit</a>

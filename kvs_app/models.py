@@ -24,9 +24,9 @@ class StateCommitie(models.Model):
     def __str__(self):
         return self.name
     POSITION_CHOICES = [
-        ('president', 'President'),
-        ('secretary', 'Secretary'),
-        ('treasurer', 'Treasurer'),
+        ('president', 'State President'),
+        ('secretary', 'Genaral Secretary'),
+        ('treasurer', 'Treasurer'), 
         ('vice_president', 'Vice President'),
         ('joint_secretary', 'Joint Secretary'),
         ('working_committee', 'Working Committee'),
