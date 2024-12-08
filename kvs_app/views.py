@@ -789,10 +789,15 @@ def add_member(request, sakha_id):
     if request.method == 'POST':
         form = SakhaMemberForm(request.POST)
         if form.is_valid():
-            member = form.save(commit=False)
-            member.sakha = sakha
-            member.save()
-            return redirect('kvs_app:sakha')
+            position = form.cleaned_data['position']
+            if SakhaMember.objects.filter(sakha=sakha, position=position).exists():
+                messages.error(request, f"A member with the position '{position}' already exists in this Sakha.")
+            else:
+                member = form.save(commit=False)
+                member.sakha = sakha
+                member.save()
+                messages.success(request, "Member added successfully!")
+                return redirect('kvs_app:sakha')
     else:
         form = SakhaMemberForm()
     
@@ -830,10 +835,15 @@ def add_taluk_member(request, taluk_id):
     if request.method == 'POST':
         form = TalukMemberForm(request.POST)
         if form.is_valid():
-            member = form.save(commit=False)
-            member.taluk = taluk
-            member.save()
-            return redirect('kvs_app:taluk_members_list', taluk_id=taluk.id)
+            position = form.cleaned_data['position']
+            if TalukMember.objects.filter(taluk=taluk, position=position).exists():
+                messages.error(request, f"A member with the position '{position}' already exists in this Taluk.")
+            else:
+                member = form.save(commit=False)
+                member.taluk = taluk
+                member.save()
+                messages.success(request, "Member added successfully!")
+                return redirect('kvs_app:taluk_members_list', taluk_id=taluk.id)
     else:
         form = TalukMemberForm()
     return render(request, 'add_taluk_member.html', {'form': form, 'taluk': taluk})
