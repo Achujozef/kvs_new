@@ -191,6 +191,7 @@
             </tr>
         </thead>
         <tbody>
+            {%if members %}
             {% for member in members %}
                 <tr>
                     <td>{{ member.name }}</td>
@@ -209,6 +210,7 @@
                     <td colspan="4" class="text-center">No members found in this Sakha.</td>
                 </tr>
             {% endfor %}
+            {% endif %}
         </tbody>
     </table>
     <a href="{% url 'kvs_app:sakha' %}" class="btn btn-secondary mt-3">Back to Sakha List</a>

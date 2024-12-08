@@ -191,6 +191,7 @@
             </tr>
         </thead>
         <tbody>
+            {% if members %}
             {% for member in members %}
             <tr>
                 <td>{{ member.name }}</td>
@@ -219,6 +220,7 @@
                 <td colspan="4" class="text-center">No members found in this Taluk.</td>
             </tr>
             {% endfor %}
+            {% endif %}
         </tbody>
     </table>
     <a href="{% url 'kvs_app:taluk' %}" class="btn btn-secondary mt-3">Back to Taluk List</a>
