@@ -120,9 +120,9 @@
             </li>
               
             <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle text-white " id="nav-item" href="#" role="button" data-toggle="dropdown">Union</a>
+                  <a class="nav-link dropdown-toggle text-white " id="nav-item" href="#" role="button" data-toggle="dropdown">Union & Sakha</a>
                     <ul class="dropdown-menu sub">
-                      <li><a class="dropdown-item text-white" href="{% url 'kvs_app:taluk' %}">Taluk</a></li>
+                      <li><a class="dropdown-item text-white" href="{% url 'kvs_app:taluk' %}">Taluk Union</a></li>
                     
                       <li><a class="dropdown-item text-white" href="{% url 'kvs_app:sakha' %}">Sakha</a></li>
       
@@ -182,12 +182,12 @@
              <div class="row">
                      <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12 col-12" id="head-breadcrump">
                       
-                             <h1 class="text-center text-white">Union</h1> 
+                             <h1 class="text-center text-white">Taluk Union</h1> 
                                <div class="text-breadcrumb4">
                                         <ul class="nav justify-content-center">
                                             <li class="nav-item"><a class="nav-link" href="{% url 'kvs_app:index' %}">Home</a></li>
                                             <li class="nav-item"><a class="nav-link"><i class="fa  fa-chevron-right"></i></a></li> 
-                                            <li class="nav-item"><a class="nav-link" href="{% url 'kvs_app:taluk' %}">Taluk </a></li>
+                                            <li class="nav-item"><a class="nav-link" href="{% url 'kvs_app:taluk' %}">Taluk Union</a></li>
                                        </ul>
                               
                             
@@ -208,7 +208,7 @@
                          <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
                             <div class="float-right">
                                 {% if user.is_authenticated %}
-                                <button type="button" class="btn btn-warning" id="btn-model" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus  mx-3"></i>Add Member</button>
+                                <button type="button" class="btn btn-warning" id="btn-model" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus  mx-3"></i>Add New Taluk Union</button>
                                 {% endif %}
    
                                                             <!-- model add member -->      
@@ -242,14 +242,14 @@
                                                                               <label for="district">Select District</label>
                                                                               {{form.district}}
                                                                             </div>
-                                                                            <div class="col-lg-12 col-md-12 mt-3">
+                                                                            {% comment %} <div class="col-lg-12 col-md-12 mt-3">
                                                                               <label for="taluk">Enter Union</label>
                                                                               {{form.taluk}}
-                                                                                {% comment %} <select class="form-control">
+                                                                                 <select class="form-control">
                                                                                        <option>tvm</option>
                                                                                        <option>palkkad</option>
-                                                                                </select> {% endcomment %}
-                                                                            </div>
+                                                                                </select> 
+                                                                            </div> {% endcomment %}
                                                                             <div class=" col-12 col-sm-12 col-lg-12 col-md-12 mt-3">
                                                                                <div class="float-right">
                                                                                  <input type="submit" class=" btn btn-warning"value="submit">
@@ -309,7 +309,7 @@
                                             <th class="text-center">Name</th>
                                             <th class="text-center">Mobile Number</th>
                                             <th class="text-center">District</th>
-                                            <th class="text-center">Union</th>
+                                            {% comment %} <th class="text-center">Union</th> {% endcomment %}
                                             {% if user.is_authenticated and user.is_superuser %}
                                             <th class="text-center">Action</th>
                                             {% endif %}
@@ -318,10 +318,12 @@
                                     <tbody>
                                       {% for i in taluk %}
                                         <tr>
-                                            <td class="text-center">{{i.name}}</td>
+                                          <td class="text-center">
+                                            <a href="{% url 'kvs_app:taluk_members_list' i.id %}" class="text-primary">{{ i.name }}</a>
+                                        </td>
                                             <td class="text-center">{{i.phone}}</td>
                                             <td class="text-center">{{i.district}}</td>
-                                            <td class="text-center">{{i.taluk}}</td>
+                                            {% comment %} <td class="text-center">{{i.taluk}}</td> {% endcomment %}
                                             {% if user.is_authenticated and user.is_superuser %}
                                             <td class="text-center">
                                                 <ul class="nav justify-content-center">
@@ -331,6 +333,11 @@
                                                         <li class="nav-item">
                                                             <a class="nav-link text-danger" href="{% url 'kvs_app:taluk_delete' i.id %}"><i class="fa fa-trash me-3"></i>Delete</a>
                                                         </li>
+                                                        <li class="nav-item">
+                                                          <a class="nav-link text-primary" href="{% url 'kvs_app:add_taluk_member' i.id %}">
+                                                              <i class="fas fa-user-plus me-3"></i>Add Member
+                                                          </a>
+                                                      </li>
                                                 
                                                 </ul>
                                                 

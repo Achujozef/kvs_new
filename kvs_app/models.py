@@ -70,9 +70,23 @@ class Taluk(models.Model):
         ('Kasaragod','Kasaragod'),
     )
     district = models.CharField(max_length=50,choices=DISTRICT_CHOICES)
-    taluk  = models.CharField(max_length=50,blank=False,null=False)
+    taluk  = models.CharField(max_length=50,blank=True,null=True)
 
+class TalukMember(models.Model):
+    POSITION_CHOICES = (
+        ('President', 'President'),
+        ('Secretary', 'Secretary'),
+        ('Treasurer', 'Treasurer'),
+    )
 
+    taluk = models.ForeignKey(Taluk, on_delete=models.CASCADE, related_name='members')
+    name = models.CharField(max_length=100, blank=False, null=False)
+    place = models.CharField(max_length=100, blank=False, null=False)
+    phone = models.CharField(max_length=10, blank=False, null=False)
+    position = models.CharField(max_length=20, choices=POSITION_CHOICES)
+
+    def __str__(self):
+        return f"{self.name} ({self.position}) - {self.taluk.name}"
 
 class Sakha(models.Model):
     def __str__(self):
@@ -96,8 +110,24 @@ class Sakha(models.Model):
         ('Kasaragod','Kasaragod'),
     )
     district = models.CharField(max_length=50,choices=DISTRICT_CHOICES)
-    taluk  = models.CharField(max_length=50,blank=False,null=False)
+    taluk  = models.CharField(max_length=50,blank=True,null=True)
+    taluk_union = models.ForeignKey(Taluk,on_delete=models.SET_DEFAULT,blank=True,null=True,default=1)
 
+class SakhaMember(models.Model):
+    POSITION_CHOICES = (
+        ('President', 'President'),
+        ('Secretary', 'Secretary'),
+        ('Treasurer', 'Treasurer'),
+    )
+
+    sakha = models.ForeignKey(Sakha, on_delete=models.CASCADE, related_name='members')
+    name = models.CharField(max_length=100, blank=False, null=False)
+    place = models.CharField(max_length=100, blank=False, null=False)
+    phone = models.CharField(max_length=10, blank=False, null=False)
+    position = models.CharField(max_length=20, choices=POSITION_CHOICES)
+
+    def __str__(self):
+        return f"{self.name} ({self.position}) - {self.sakha.sakha_no}"
 
 
 class Gender_choices(models.Model):

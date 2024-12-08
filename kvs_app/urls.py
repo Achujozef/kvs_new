@@ -53,7 +53,14 @@ urlpatterns = [
     path('login', views.login,name='login'),
     path('logout', views.logout,name='logout'),
     
-    
 
+    path('sakha/<int:sakha_id>/add_member/', views.add_member, name='add_member'),
+    path('sakha/<int:sakha_id>/members/', views.sakha_members_list, name='sakha_members_list'),
+    path('member/<int:member_id>/edit/', views.edit_member, name='edit_member'),
+    path('member/<int:member_id>/delete/', views.delete_member, name='delete_member'),
 
+    path('taluk/<int:taluk_id>/add-member/', views.add_taluk_member, name='add_taluk_member'),
+    path('taluk/member/<int:member_id>/edit/', views.edit_taluk_member, name='edit_taluk_member'),
+    path('taluk/member/<int:member_id>/delete/', views.delete_taluk_member, name='delete_taluk_member'),
+    path('taluk/<int:taluk_id>/members/', views.taluk_members_list, name='taluk_members_list'),
 ]

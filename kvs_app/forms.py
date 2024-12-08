@@ -1,5 +1,5 @@
 from django import forms
-from .models import Databank, Join_Kvs, StateCommitie,Taluk,Sakha,Matrimonial,Services
+from .models import Databank, TalukMember, Join_Kvs, StateCommitie,Taluk,Sakha,Matrimonial,Services,SakhaMember
 
 
 
@@ -11,7 +11,7 @@ class StateCommiteForm(forms.ModelForm):
         widgets = {
             'name' : forms.TextInput(attrs={'class':'form-control','placeholder':'Name'}),
             'phone' : forms.NumberInput(attrs={'class':'form-control','placeholder':'Mobile'}),
-            'place' : forms.TextInput(attrs={'class':'form-control','placeholder':'Place'}),
+            'place' : forms.TextInput(attrs={'class':'form-control','placeholder':'Union'}),
             'photo' : forms.ClearableFileInput(attrs={'class':'form-control'}),
             'position': forms.Select(attrs={'class': 'form-control'}),
         }
@@ -26,10 +26,23 @@ class TalukForm(forms.ModelForm):
             'name' : forms.TextInput(attrs={'class':'form-control','placeholder':'Name'}),
             'phone' : forms.NumberInput(attrs={'class':'form-control','placeholder':'Mobile'}),
             'district': forms.Select(attrs={'class':'form-control','placeholder':'District'}),
-            'taluk' : forms.TextInput(attrs={'class':'form-control','placeholder':'Union'})
+            'taluk' : forms.TextInput(attrs={'class':'form-control','placeholder':'Union'}),
+            'taluk_union': forms.Select(attrs={
+                'class': 'form-control',
+                'placeholder': 'Select Taluk'
+            }),
         }
 
-
+class TalukMemberForm(forms.ModelForm):
+    class Meta:
+        model = TalukMember
+        fields = ['name', 'place', 'phone', 'position']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'place': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'position': forms.Select(attrs={'class': 'form-control'}),
+        }
 
 
 class SakhaForm(forms.ModelForm):
@@ -41,9 +54,22 @@ class SakhaForm(forms.ModelForm):
             'district': forms.Select(attrs={'class':'form-control'}),
             'taluk' : forms.TextInput(attrs={'class':'form-control','placeholder':'Union'}),
             'sakaha_name' : forms.TextInput(attrs={'class':'form-control','placeholder':'Sakha Name'}),
+            'taluk_union': forms.Select(attrs={
+                'class': 'form-control',
+                'placeholder': 'Select Taluk'
+            }),
         }
 
-
+class SakhaMemberForm(forms.ModelForm):
+    class Meta:
+        model = SakhaMember
+        fields = ['name', 'place', 'phone', 'position']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'place': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'position': forms.Select(attrs={'class': 'form-control'}),
+        }
 
 # class MatrimonialForm(forms.ModelForm):
 #     class Meta:

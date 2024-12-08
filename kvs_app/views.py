@@ -1,11 +1,11 @@
 import datetime
 from unittest import result
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth.models import User,auth
-from .forms import DatabankEditForm, MatrimonialUpdateForm, StateCommiteForm,TalukForm,SakhaForm,DatabankAddForm,MatrimonialUpdateForm,Services_Add_Form,Services_Admin_Edit_Form,Join_Kvs_Add_Form,Join_Kvs_Admin_Update
-from .models import Databank, ExtendedUserModel, Join_Kvs, Matrimonial, Sakha, Services, StateCommitie,Taluk
+from .forms import TalukMemberForm, SakhaMemberForm, DatabankEditForm, MatrimonialUpdateForm, StateCommiteForm,TalukForm,SakhaForm,DatabankAddForm,MatrimonialUpdateForm,Services_Add_Form,Services_Admin_Edit_Form,Join_Kvs_Add_Form,Join_Kvs_Admin_Update
+from .models import TalukMember, SakhaMember, Databank, ExtendedUserModel, Join_Kvs, Matrimonial, Sakha, Services, StateCommitie,Taluk
 import re
 now = datetime.datetime.now()
 from django.http.response import JsonResponse
@@ -127,11 +127,17 @@ def taluk_delete(request,taluk_id):
 def sakha(request):
     if request.method == 'POST':
         form = SakhaForm(request.POST)
+        addmemberform = SakhaMemberForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('kvs_app:sakha')
+        if addmemberform.is_valid():  # Save member only if its form is valid
+            addmemberform.save()
+            return redirect('kvs_app:sakha')
     else:
         form = SakhaForm()
+        addmemberform = SakhaMemberForm()
+        print(addmemberform.fields)
     if request.user.is_superuser:
         sakha = Sakha.objects.all().order_by('-id')
         return render(request,'sakha.html',{'form':form,'sakha':sakha})
@@ -141,7 +147,8 @@ def sakha(request):
         return render(request,'sakha.html',{'form':form,'sakha':sakha})
     else: 
         sakha = Sakha.objects.all().order_by('-id')
-    return render(request,'sakha.html',{'form':form,'sakha':sakha})
+    return render(request, 'sakha.html', {'addmemberform': addmemberform,'form': form, 'sakha': sakha })
+
 
 
 def sakha_update(request,sakha_id):
@@ -776,10 +783,83 @@ def logout(request):
 
 
 
+def add_member(request, sakha_id):
+    sakha = get_object_or_404(Sakha, id=sakha_id)
+    
+    if request.method == 'POST':
+        form = SakhaMemberForm(request.POST)
+        if form.is_valid():
+            member = form.save(commit=False)
+            member.sakha = sakha
+            member.save()
+            return redirect('kvs_app:sakha')
+    else:
+        form = SakhaMemberForm()
+    
+    return render(request, 'add_member.html', {'form': form, 'sakha': sakha})
 
 
+def sakha_members_list(request, sakha_id):
+    sakha = get_object_or_404(Sakha, id=sakha_id)
+    members = SakhaMember.objects.filter(sakha=sakha)
+    return render(request, 'sakha_members_list.html', {'sakha': sakha, 'members': members})
+
+def edit_member(request, member_id):
+    member = get_object_or_404(SakhaMember, id=member_id)
+    if request.method == 'POST':
+        form = SakhaMemberForm(request.POST, instance=member)
+        if form.is_valid():
+            form.save()
+            return redirect('kvs_app:sakha_members_list', sakha_id=member.sakha.id)
+    else:
+        form = SakhaMemberForm(instance=member)
+    return render(request, 'edit_member.html', {'form': form, 'member': member})
 
 
+def delete_member(request, member_id):
+    member = get_object_or_404(SakhaMember, id=member_id)
+    sakha_id = member.sakha.id
+    if request.method == 'POST':
+        member.delete()
+        messages.success(request, 'Member deleted successfully.')
+        return redirect('kvs_app:sakha_members_list', sakha_id=sakha_id)
+    return render(request, 'delete_member.html', {'member': member})
+
+def add_taluk_member(request, taluk_id):
+    taluk = get_object_or_404(Taluk, id=taluk_id)
+    if request.method == 'POST':
+        form = TalukMemberForm(request.POST)
+        if form.is_valid():
+            member = form.save(commit=False)
+            member.taluk = taluk
+            member.save()
+            return redirect('kvs_app:taluk_members_list', taluk_id=taluk.id)
+    else:
+        form = TalukMemberForm()
+    return render(request, 'add_taluk_member.html', {'form': form, 'taluk': taluk})
 
 
+def edit_taluk_member(request, member_id):
+    member = get_object_or_404(TalukMember, id=member_id)
+    if request.method == 'POST':
+        form = TalukMemberForm(request.POST, instance=member)
+        if form.is_valid():
+            form.save()
+            return redirect('kvs_app:taluk_members_list', taluk_id=member.taluk.id)
+    else:
+        form = TalukMemberForm(instance=member)
+    return render(request, 'edit_taluk_member.html', {'form': form, 'member': member})
 
+def delete_taluk_member(request, member_id):
+    member = get_object_or_404(TalukMember, id=member_id)
+    taluk_id = member.taluk.id
+    if request.method == 'POST':
+        member.delete()
+        messages.success(request, 'Member deleted successfully.')
+        return redirect('kvs_app:taluk_members_list', taluk_id=taluk_id)
+    return render(request, 'delete_taluk_member.html', {'member': member})
+
+def taluk_members_list(request, taluk_id):
+    taluk = get_object_or_404(Taluk, id=taluk_id)
+    members = taluk.members.all()  # `related_name='members'` is used in the `TalukMember` model
+    return render(request, 'taluk_members_list.html', {'taluk': taluk, 'members': members})
