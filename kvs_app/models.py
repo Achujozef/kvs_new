@@ -29,6 +29,8 @@ class StateCommitie(models.Model):
         ('treasurer', 'Treasurer'), 
         ('vice_president', 'Vice President'),
         ('joint_secretary', 'Joint Secretary'),
+        ('patron', 'Patron'),
+        ('legal_advisor', 'Legal Advisor'),
         ('working_committee', 'Working Committee'),
     ]
     name = models.CharField(max_length=50,blank=False,null=False)

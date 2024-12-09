@@ -39,10 +39,11 @@ def executiveforum(request):
     treasurers = StateCommitie.objects.filter(position='treasurer').order_by('-id')
     vice_presidents = StateCommitie.objects.filter(position='vice_president').order_by('-id')
     joint_secretaries = StateCommitie.objects.filter(position='joint_secretary').order_by('-id')
+    patron = StateCommitie.objects.filter(position='patron').order_by('-id')
+    legal_advisor  = StateCommitie.objects.filter(position='legal_advisor').order_by('-id')
     working_committee = StateCommitie.objects.filter(position='working_committee').order_by('-id')
-
     state_commite = StateCommitie.objects.all().order_by('-id')
-
+    print(patron)
     return render(request, 'executiveforum.html', 
         {
             'form': form,
@@ -52,6 +53,8 @@ def executiveforum(request):
             'treasurers': treasurers,
             'vice_presidents': vice_presidents,
             'joint_secretaries': joint_secretaries,
+            'patron':patron,
+            'legal_advisor':legal_advisor,
             'working_committee': working_committee
         }
     )

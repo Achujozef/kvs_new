@@ -306,7 +306,7 @@
                                 <table class="table table-hover table-borderless table-responsive" id="table-id">
                                     <thead>
                                         <tr>
-                                            <th class="text-center">Name</th>
+                                            <th class="text-center">Union</th>
                                             <th class="text-center">Mobile Number</th>
                                             <th class="text-center">District</th>
                                             {% comment %} <th class="text-center">Union</th> {% endcomment %}
@@ -319,7 +319,7 @@
                                       {% for i in taluk %}
                                         <tr>
                                           <td class="text-center">
-                                            <a href="{% url 'kvs_app:taluk_members_list' i.id %}" class="text-primary">{{ i.name }}</a>
+                                            <a href="{% url 'kvs_app:taluk_members_list' i.id %}"  style="color: white;">{{ i.name }}</a>
                                         </td>
                                             <td class="text-center">{{i.phone}}</td>
                                             <td class="text-center">{{i.district}}</td>
