@@ -83,7 +83,7 @@ class TalukMember(models.Model):
 
     taluk = models.ForeignKey(Taluk, on_delete=models.CASCADE, related_name='members')
     name = models.CharField(max_length=100, blank=False, null=False)
-    place = models.CharField(max_length=100, blank=False, null=False)
+    place = models.CharField(max_length=100, blank=True, null=True)
     phone = models.CharField(max_length=10, blank=False, null=False)
     position = models.CharField(max_length=20, choices=POSITION_CHOICES)
 
@@ -124,7 +124,7 @@ class SakhaMember(models.Model):
 
     sakha = models.ForeignKey(Sakha, on_delete=models.CASCADE, related_name='members')
     name = models.CharField(max_length=100, blank=False, null=False)
-    place = models.CharField(max_length=100, blank=False, null=False)
+    place = models.CharField(max_length=100, blank=True, null=True)
     phone = models.CharField(max_length=10, blank=False, null=False)
     position = models.CharField(max_length=20, choices=POSITION_CHOICES)
 

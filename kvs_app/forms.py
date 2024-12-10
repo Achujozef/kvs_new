@@ -36,10 +36,9 @@ class TalukForm(forms.ModelForm):
 class TalukMemberForm(forms.ModelForm):
     class Meta:
         model = TalukMember
-        fields = ['name', 'place', 'phone', 'position']
+        fields = ['name', 'phone', 'position']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'place': forms.TextInput(attrs={'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
             'position': forms.Select(attrs={'class': 'form-control'}),
         }
@@ -63,10 +62,9 @@ class SakhaForm(forms.ModelForm):
 class SakhaMemberForm(forms.ModelForm):
     class Meta:
         model = SakhaMember
-        fields = ['name', 'place', 'phone', 'position']
+        fields = ['name', 'phone', 'position']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'place': forms.TextInput(attrs={'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
             'position': forms.Select(attrs={'class': 'form-control'}),
         }

@@ -177,12 +177,12 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Add Member to Taluk {{ taluk.name }}</h2>
+    <h2>Add Office Bearers to Taluk {{ taluk.name }}</h2>
     <form method="POST" class="mt-4">
         {% csrf_token %}
         {{ form.as_p }}
         <div class="mt-3">
-            <button type="submit" class="btn btn-primary">Add Member</button>
+            <button type="submit" class="btn btn-primary">Add Office Bearers</button>
             <a href="{% url 'kvs_app:taluk' %}" class="btn btn-secondary">Cancel</a>
         </div>
     </form>

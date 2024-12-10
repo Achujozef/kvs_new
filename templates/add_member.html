@@ -176,17 +176,13 @@
 </header><!-- Abouts -->
 {% block content %}
 <div class="container mt-5">
-    <h2>Add Member to Sakha {{ sakha.sakha_no }}</h2>
+    <h2>Add Office Bearers to Sakha {{ sakha.sakha_no }}</h2>
     <form method="POST" class="mt-4">
         {% csrf_token %}
         <div class="row">
             <div class="col-lg-12 col-md-12 mt-3">
                 <label for="id_name">Name</label>
                 {{ form.name }}
-            </div>
-            <div class="col-lg-12 col-md-12 mt-3">
-                <label for="id_place">Place</label>
-                {{ form.place }}
             </div>
             <div class="col-lg-12 col-md-12 mt-3">
                 <label for="id_phone">Phone</label>
@@ -197,7 +193,7 @@
                 {{ form.position}}
             </div>
             <div class="col-lg-12 col-md-12 mt-4">
-                <button type="submit" class="btn btn-primary">Add Member</button>
+                <button type="submit" class="btn btn-primary">Add Office Bearers</button>
                 <a href="{% url 'kvs_app:sakha' %}" class="btn btn-secondary">Cancel</a>
             </div>
         </div>
