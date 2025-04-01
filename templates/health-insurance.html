@@ -169,7 +169,7 @@
                 <a class="nav-link dropdown-toggle text-white " id="nav-item" href="#" role="button" data-toggle="dropdown">Services</a>
                   <ul class="dropdown-menu sub">
                     <li><a class="dropdown-item text-white" href="{% url 'kvs_app:accident_insurance' %}">Accident Insurance</a></li>
-                    <li><a class="dropdown-item text-white" href="{% url 'kvs_app:health_insurance' %}">Health Insurance</a></li>
+                    <li><a class="dropdown-item text-white" href="{% url 'kvs_app:health_insurance' %}">KVS Funds</a></li>
                     {% if user.is_authenticated %}
                     <li><a class="dropdown-item text-white" href="{% url 'kvs_app:insurance_pending' %}">Pendings</a></li>
                     {% endif %}
@@ -192,7 +192,7 @@
              <div class="row">
                      <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12 col-12" id="head-breadcrump">
                       
-                             <h1 class="text-center text-white">Health Insurance</h1> 
+                             <h1 class="text-center text-white">KVS Funds</h1> 
                               
                         </div>     
                      </div>
@@ -224,7 +224,7 @@
                       
                                                          </div>
                                                         <div class="modal-body">
-                                                             <form method="post">
+                                                             {% comment %} <form method="post">
                                                               {% csrf_token %}
                                                                 <div class="row">
                                                                       <div class="col-lg-12 col-md-12 mt-3">
@@ -294,7 +294,65 @@
                                                                       </div>
                                                                   </div>
                                     
-                                                            </form>
+                                                            </form> {% endcomment %}
+                                                            <form method="post">
+                                                              {% csrf_token %}
+                                                              <div class="row">
+                                                                  <div class="col-lg-12 col-md-12 mt-3">
+                                                                      <label class="form-label">Category</label>
+                                                                      {{ form.category }}
+                                                                  </div>
+                                                                  <div class="col-lg-12 col-md-12 mt-3">
+                                                                      <label class="form-label"><span style="color:red; font-weight:600">*</span> Name</label>
+                                                                      {{ form.name }}
+                                                                  </div>
+                                                                  <div class="col-lg-12 col-md-12 mt-3">
+                                                                      <label class="form-label"><span style="color:red; font-weight:600">*</span> Contact Number</label>
+                                                                      {{ form.contact_number }}
+                                                                  </div>
+                                                                  <div class="col-lg-12 col-md-12 mt-3">
+                                                                      <label class="form-label">Date of Payment</label>
+                                                                      {{ form.date_of_payment }}
+                                                                  </div>
+                                                                  <div class="col-lg-12 col-md-12 mt-3">
+                                                                      <label class="form-label">Receipt Number</label>
+                                                                      {{ form.receipt_num }}
+                                                                  </div>
+                                                                  <div class="col-lg-12 col-md-12 mt-3">
+                                                                      <label class="form-label">Coupon Number</label>
+                                                                      {{ form.coupen_num }}
+                                                                  </div>
+                                                                  <div class="col-lg-12 col-md-12 mt-3">
+                                                                      <label class="form-label">Sakha Number</label>
+                                                                      {{ form.sakha_num }}
+                                                                  </div>
+                                                                  <div class="col-lg-12 col-md-12 mt-3">
+                                                                      <label class="form-label">District</label>
+                                                                      {{ form.district }}
+                                                                  </div>
+                                                                  <div class="col-lg-12 col-md-12 mt-3">
+                                                                      <label class="form-label">Union</label>
+                                                                      {{ form.union }}
+                                                                  </div>
+                                                                  <div class="col-lg-12 col-md-12 mt-3">
+                                                                      <label class="form-label">Amount Paid</label>
+                                                                      {{ form.amount_paid }}
+                                                                  </div>
+                                                                  <div class="col-lg-12 col-md-12 mt-3">
+                                                                      <label class="form-label">Collected By Name</label>
+                                                                      {{ form.collected_by_name }}
+                                                                  </div>
+                                                                  <div class="col-lg-12 col-md-12 mt-3">
+                                                                      <label class="form-label">Collector's Mobile Number</label>
+                                                                      {{ form.collectors_mob_num }}
+                                                                  </div>
+                                                                  <div class="col-12 col-sm-12 col-lg-12 col-md-12 mt-3">
+                                                                      <div class="float-right">
+                                                                          <input type="submit" class="btn btn-outline-warning" value="Submit">
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </form>
                                                        </div>
                       
                                                  </div>
@@ -340,60 +398,58 @@
                    </div>
                             <div style="margin-top: 30px;"></div>
                             {% if user.is_authenticated %}
-                                <table class="table table-hover table-bordered table-responsive" id="table-id-health">
-                                    <thead>
-                                        <tr>
-                                          <th class="">Catagory</th>
-                                          <th class="">Name</th>
-                                          <th class="">joining Date</th>
-                                          <th class="">Mobile Number</th>
-                                          <th class="">ID Details</th>
-                                          <th class="">ID Number</th>
-                                          <th class="">Place</th>
-                                          <th class="">District</th>
-                                          <th class="">Taluk</th>
-                                          <th class="">Payment Details</th>
-                                          <th class="">Proposed By Name</th>
-                                          <th class="">Proposed By contact Number</th>
-                                          {% if user.is_authenticated and user.is_superuser %}
-                                          <th class="">Action</th>
-                                          {% endif %}
-                                        </tr>
-                                    </thead>
-                                    <tbody class="tbody-health">
-                                      {% for i in result %}
-                                        <tr>
-                                            <th class="text-center">{{i.category}}</th>
-                                            <th class="text-center">{{i.name}}</th>
-                                            <th class="text-center">{{i.joining_date}}</th>
-                                            <th class="text-center">{{i.mobile_no}}</th>
-                                            <th class="text-center">{{i.id_details}}</th>
-                                            <th class="text-center">{{i.id_no}}</th>
-                                            <th class="text-center">{{i.sakha_no}}</th>
-                                            <th class="text-center">{{i.district}}</th>
-                                            <th class="text-center">{{i.taluk}}</th>
-                                            <th class="text-center">{{i.payment_details}}</th>
-                                            <th class="text-center">{{i.proposed_by_name}}</th>
-                                            <th class="text-center">{{i.proposed_by_contact_no}}</th>
-                                       
-                                            {% if user.is_authenticated and user.is_superuser %}
-                                            <td class="text-center">
-                                                <ul class="nav justify-content-center" id="nav-health">
-                                                        <li class="nav-item ">
-                                                            <a class="nav-link text-success" href="{% url 'kvs_app:insurance_update' i.id %}"><i class="fas fa fa-edit me-3"></i>Edit</a>
-                                                        </li>
-                                                        <li class="nav-item">
-                                                            <a class="nav-link text-danger" href="{% url 'kvs_app:insurance_delete' i.id %}"><i class="fa fa-trash me-3"></i>Delete</a>
-                                                        </li>
-                                                
-                                                </ul>
-                                                
-                                            </td>
-                                            {% endif %}
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
+                            <table class="table table-hover table-bordered table-responsive" id="table-id-payment">
+                              <thead>
+                                  <tr>
+                                      <th>Category</th>
+                                      <th>Name</th>
+                                      <th>Contact Number</th>
+                                      <th>Date of Payment</th>
+                                      <th>Receipt Number</th>
+                                      <th>Coupon Number</th>
+                                      <th>Sakha Number</th>
+                                      <th>District</th>
+                                      <th>Union</th>
+                                      <th>Amount Paid</th>
+                                      <th>Collected By Name</th>
+                                      <th>Collector's Mobile Number</th>
+                                      {% if user.is_authenticated and user.is_superuser %}
+                                      <th>Action</th>
+                                      {% endif %}
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  {% for i in result %}
+                                  <tr>
+                                      <td class="text-center">{{ i.category }}</td>
+                                      <td class="text-center">{{ i.name }}</td>
+                                      <td class="text-center">{{ i.contact_number }}</td>
+                                      <td class="text-center">{{ i.date_of_payment }}</td>
+                                      <td class="text-center">{{ i.receipt_num }}</td>
+                                      <td class="text-center">{{ i.coupen_num }}</td>
+                                      <td class="text-center">{{ i.sakha_num }}</td>
+                                      <td class="text-center">{{ i.district }}</td>
+                                      <td class="text-center">{{ i.union }}</td>
+                                      <td class="text-center">{{ i.amount_paid }}</td>
+                                      <td class="text-center">{{ i.collected_by_name }}</td>
+                                      <td class="text-center">{{ i.collectors_mob_num }}</td>
+                                      {% if user.is_authenticated and user.is_superuser %}
+                                      <td class="text-center">
+                                          <ul class="nav justify-content-center">
+                                              {% comment %} <li class="nav-item">
+                                                <a class="nav-link text-success" href="{% url 'kvs_app:insurance_update' i.id %}"><i class="fas fa fa-edit me-3"></i>Edit</a>
+                                              </li> {% endcomment %}
+                                              <li class="nav-item">
+                                                <a class="nav-link text-danger" href="{% url 'kvs_app:kvs_delete' i.id %}"><i class="fa fa-trash me-3"></i>Delete</a>
+                                              </li>
+                                          </ul>
+                                      </td>
+                                      {% endif %}
+                                  </tr>
+                                  {% endfor %}
+                              </tbody>
+                          </table>
+                          
                                 {% else %}
                                 <div class="col-lg-12 col-md-12">
                                 <table class="table table-hover table-borderless" id="table-id">
@@ -437,7 +493,11 @@
                                  <h4 class="foot_head">About Us</h4>
                                  <p class="foot_para"> The purpose and vision of  kerala Viswakarma Sabha is to inform about the welfare , pension and insurance schemes devised by the Central and State government for the Artisan community and take necessary steps to make their benefits available to the deserving ones..</p>
                                    <ul class="nav">
-                                         <li class="nav-item"><a class="nav-link"><i class="fa  fa-facebook"></i></a></li>
+                                        <li class="nav-item">
+  <a class="nav-link" href="https://www.facebook.com/profile.php?id=61557627672018" target="_blank" style="cursor: pointer;">
+    <i class="fa fa-facebook"></i>
+  </a>
+</li>
                                          <li class="nav-item"><a class="nav-link"><i class="fa fa-twitter"></i></a></li>
                                          <li class="nav-item"><a class="nav-link"><i class="fa fa-instagram"></i></a></li>
                                    </ul>

@@ -34,6 +34,7 @@ urlpatterns = [
     path('health-insurance', views.health_insurance,name='health_insurance'),
     # path('services-update/<int:update_id>', views.health_insurance_update,name='health_insurance_update'),
     path('insurance_delete/<int:dlt_id>', views.insurance_delete,name='insurance_delete'),
+    path('kvs_delete/<int:dlt_id>', views.kvs_delete,name='kvs_delete'),
     path('accident-insurance', views.accident_insurance,name='accident_insurance'),
     path('insurance-pending', views.insurance_pending,name='insurance_pending'),
     path('insurance-update/<int:update_id>', views.insurance_update,name='insurance_update'),

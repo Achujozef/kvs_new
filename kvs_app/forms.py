@@ -1,5 +1,5 @@
 from django import forms
-from .models import Databank, TalukMember, Join_Kvs, StateCommitie,Taluk,Sakha,Matrimonial,Services,SakhaMember
+from .models import Databank, TalukMember, Join_Kvs, StateCommitie,Taluk,Sakha,Matrimonial,Services,SakhaMember, PaymentRecord
 
 
 
@@ -296,4 +296,23 @@ class Join_Kvs_Admin_Update(forms.ModelForm):
             'renewal': forms.Select(attrs={'class':'form-control'}),
             'data_enter_by_name' : forms.TextInput(attrs={'class':'form-control'}),
             'data_enter_by_phone' : forms.TextInput(attrs={'class':'form-control'}),
+        }
+
+class PaymentRecordForm(forms.ModelForm):
+    class Meta:
+        model = PaymentRecord
+        fields = '__all__'
+        widgets = {
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'contact_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'date_of_payment': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'receipt_num': forms.TextInput(attrs={'class': 'form-control'}),
+            'coupen_num': forms.TextInput(attrs={'class': 'form-control'}),
+            'sakha_num': forms.TextInput(attrs={'class': 'form-control'}),
+            'district': forms.TextInput(attrs={'class': 'form-control'}),
+            'union': forms.TextInput(attrs={'class': 'form-control'}),
+            'amount_paid': forms.NumberInput(attrs={'class': 'form-control'}),
+            'collected_by_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'collectors_mob_num': forms.TextInput(attrs={'class': 'form-control'}),
         }

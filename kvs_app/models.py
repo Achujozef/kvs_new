@@ -421,3 +421,27 @@ class Databank(models.Model):
     )
     status = models.CharField(max_length=25,choices=status_choices,default='Hide')
     
+class PaymentRecord(models.Model):
+    POSITION_CHOICES = [
+        ('Monthly','Monthly'),
+        ('Annual','Annual')
+    ]
+    category = models.CharField(max_length=20,choices=POSITION_CHOICES,default='Monthly', blank=True,null=True)
+    name = models.CharField(max_length=255)
+    contact_number = models.CharField(max_length=20)
+    date_of_payment = models.DateField(null=True, blank=True)
+    receipt_num = models.CharField(max_length=100, null=True, blank=True)
+    coupen_num = models.CharField(max_length=100, null=True, blank=True)
+    sakha_num = models.CharField(max_length=100, null=True, blank=True)
+    district = models.CharField(max_length=255, null=True, blank=True)
+    union = models.CharField(max_length=255, null=True, blank=True)
+    amount_paid = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    collected_by_name = models.CharField(max_length=255, null=True, blank=True)
+    collectors_mob_num = models.CharField(max_length=20, null=True, blank=True)
+    # status_choices = (
+    #     ('Pending','Pending'),
+    #     ('Approved','Approved')
+    # )
+    # status = models.CharField(max_length=25,choices=status_choices,default='Approved')
+    def __str__(self):
+        return f"{self.name} - {self.contact_number}"

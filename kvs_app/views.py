@@ -4,7 +4,7 @@ from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib.auth.models import User,auth
-from .forms import TalukMemberForm, SakhaMemberForm, DatabankEditForm, MatrimonialUpdateForm, StateCommiteForm,TalukForm,SakhaForm,DatabankAddForm,MatrimonialUpdateForm,Services_Add_Form,Services_Admin_Edit_Form,Join_Kvs_Add_Form,Join_Kvs_Admin_Update
+from .forms import TalukMemberForm, SakhaMemberForm, DatabankEditForm, MatrimonialUpdateForm, StateCommiteForm,TalukForm,SakhaForm,DatabankAddForm, PaymentRecord , MatrimonialUpdateForm,PaymentRecordForm, Services_Add_Form,Services_Admin_Edit_Form,Join_Kvs_Add_Form,Join_Kvs_Admin_Update
 from .models import TalukMember, SakhaMember, Databank, ExtendedUserModel, Join_Kvs, Matrimonial, Sakha, Services, StateCommitie,Taluk
 import re
 now = datetime.datetime.now()
@@ -375,24 +375,26 @@ def data_bank_hide(request):
 
 def health_insurance(request):
     if request.method == 'POST':
-        form = Services_Add_Form(request.POST)
+        form = PaymentRecordForm(request.POST)
         if form.is_valid():
             form.save()
             print('success')
             messages.success(request,'Wait for the Admin Approval')
             return redirect('kvs_app:index')
     else:
-        form = Services_Add_Form()
-    if request.user.is_superuser:
-        result = Services.objects.filter(category__name='Health Insurance',status='Approved').order_by('-id')
-        return render(request,'health-insurance.html',{'form':form,'result':result})
-    elif request.user.is_staff:
-        district = request.user.extendedusermodel.district
-        result = Services.objects.filter(category__name='Health Insurance',status='Approved',district=district).order_by('-id')
-        return render(request,'health-insurance.html',{'form':form,'result':result})
-    else:
-        result = Services.objects.filter(category__name='Health Insurance',status='Approved').order_by('-id')
-        return render(request,'health-insurance.html',{'form':form,'result':result})
+        form = PaymentRecordForm()
+    # if request.user.is_superuser:
+    #     result = PaymentRecord.objects.filter(category__name='KVS Funds',status='Approved').order_by('-id')
+    #     return render(request,'health-insurance.html',{'form':form,'result':result})
+    # elif request.user.is_staff:
+    #     district = request.user.extendedusermodel.district
+    #     result = PaymentRecord.objects.filter(category__name='KVS Funds',status='Approved',district=district).order_by('-id')
+    #     return render(request,'health-insurance.html',{'form':form,'result':result})
+    # else:
+    result = PaymentRecord.objects.all().order_by('-id')
+    print("Resultss")
+    print("Result", result)
+    return render(request,'health-insurance.html',{'form':form,'result':result})
 
 
 
@@ -414,7 +416,11 @@ def insurance_delete(request,dlt_id):
     messages.success(request,'Succesfully Deleted')
     return redirect('kvs_app:index')
 
-
+def kvs_delete(request,dlt_id):
+    dlt = PaymentRecord.objects.filter(id=dlt_id)
+    dlt.delete()
+    messages.success(request,'Succesfully Deleted')
+    return redirect('kvs_app:index')
 
 def accident_insurance(request):
     if request.method == 'POST':
