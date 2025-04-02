@@ -424,7 +424,10 @@ class Databank(models.Model):
 class PaymentRecord(models.Model):
     POSITION_CHOICES = [
         ('Monthly','Monthly'),
-        ('Annual','Annual')
+        ('Annual','Annual'),
+        ('Emergency Fund','Emergency Fund'),
+        ('Building Fund','Building Fund'),
+        ('Donation','Donation')
     ]
     category = models.CharField(max_length=20,choices=POSITION_CHOICES,default='Monthly', blank=True,null=True)
     name = models.CharField(max_length=255)
