@@ -1382,6 +1382,7 @@
                   </thead>
                   <tbody>
                     {% for i in membership_list %}
+                    {% comment %} <tr {% if i.renewal == 'Renewed' %} style="background-color:rgb(119, 201, 138);" {% endif %}> {% endcomment %}
                     <tr>
                       <th class="text-center">
                         <a href="{% url "kvs_app:join_kvs_profile_view" i.id %}">
@@ -1441,7 +1442,7 @@
                   </thead>
                   <tbody>
                     {% for i in membership_list %}
-                    <tr>
+                     <tr {% if i.renewal == 'Renewed' %} style="background-color:rgb(119, 201, 138);" {% endif %}>
                       <th class="">{{i.name}}</th>
                       <th class="">{{i.district}}</th>
                        <th class="">{{i.union}}</th>
