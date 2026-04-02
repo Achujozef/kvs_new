@@ -1137,6 +1137,17 @@
                     <h5 class="custom-text">Paid Month : {{i.paid_month}}</h5>
                     <h5 class="custom-text">Insurance Status : {{i.insurance_status}}</h5>
                     <h5 class="custom-text">Membership Renewal : {{i.renewal}}</h5>
+                    <h5 class="custom-text">
+                      Renewal valid until :
+                      {% if i.renewal_end_date %}{{ i.renewal_end_date|date:"d M Y" }}{% else %}—{% endif %}
+                    </h5>
+                    {% if user.is_staff %}
+                    <p class="custom-text mb-0">
+                      <a href="{% url 'kvs_app:join_kvs_renewal_history' i.id %}"
+                        >View renewal history</a
+                      >
+                    </p>
+                    {% endif %}
                     <h5 class="custom-text">Remark : {{i.remark}}</h5>
                     <h5 class="custom-text">Status : {{i.status}}</h5>
 

@@ -1,12 +1,52 @@
-myenv
-env
+# Virtual environments
+myenv/
+env/
+.venv/
+venv/
+ENV/
+
+# Local database
 db.sqlite3
+*.sqlite3
 
-# Django migrations
-migrations/
-
-# Python cache files
+# Python bytecode and caches
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
 *.pyo
 *.pyd
+.Python
+
+# Keep migration *.py files in git — only ignore cache inside migrations
+**/migrations/__pycache__/
+
+# Distribution / packaging
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Django collected static (if you use collectstatic to assets/)
+# assets/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# Testing / coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+
+# Logs
+*.log

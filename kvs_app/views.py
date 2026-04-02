@@ -1,11 +1,19 @@
+import calendar
+import csv
 import datetime
+from datetime import date
+from decimal import Decimal, InvalidOperation
 from unittest import result
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.db import transaction
+from django.utils import timezone
+from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User,auth
 from .forms import TalukMemberForm, SakhaMemberForm, DatabankEditForm, MatrimonialUpdateForm, StateCommiteForm,TalukForm,SakhaForm,DatabankAddForm, PaymentRecord , MatrimonialUpdateForm,PaymentRecordForm, Services_Add_Form,Services_Admin_Edit_Form,Join_Kvs_Add_Form,Join_Kvs_Admin_Update
-from .models import TalukMember, SakhaMember, Databank, ExtendedUserModel, Join_Kvs, Matrimonial, Sakha, Services, StateCommitie,Taluk
+from .models import TalukMember, SakhaMember, Databank, ExtendedUserModel, Join_Kvs, Matrimonial, Sakha, Services, StateCommitie, Taluk, MembershipRenewal
+from .membership_utils import get_membership_fee_total_cached, invalidate_membership_fee_total_cache
 import re
 now = datetime.datetime.now()
 from django.http.response import JsonResponse
@@ -535,27 +543,179 @@ def join_kvs(request):
     else:
         form = Join_Kvs_Add_Form()
 
-    # Get the filter value from the request, defaulting to "All"
     renewal_filter = request.GET.get('renewal', 'All')
+    mbr_status = request.GET.get('mbr_status', 'all')
+    today = timezone.now().date()
 
     if request.user.is_superuser:
-        if renewal_filter == 'All':
-            membership_list = Join_Kvs.objects.filter(status='Approved').order_by('-id')
-        else:
-            membership_list = Join_Kvs.objects.filter(status='Approved', renewal=renewal_filter).order_by('-id')
+        membership_list = Join_Kvs.objects.filter(status='Approved')
+        if renewal_filter != 'All':
+            membership_list = membership_list.filter(renewal=renewal_filter)
     elif request.user.is_staff:
         district = request.user.extendedusermodel.district
-        if renewal_filter == 'All':
-            membership_list = Join_Kvs.objects.filter(status='Approved', district=district).order_by('-id')
-        else:
-            membership_list = Join_Kvs.objects.filter(status='Approved', district=district, renewal=renewal_filter).order_by('-id')
+        membership_list = Join_Kvs.objects.filter(status='Approved', district=district)
+        if renewal_filter != 'All':
+            membership_list = membership_list.filter(renewal=renewal_filter)
     else:
-        if renewal_filter == 'All':
-            membership_list = Join_Kvs.objects.filter(status='Approved').order_by('-id')
-        else:
-            membership_list = Join_Kvs.objects.filter(status='Approved', renewal=renewal_filter).order_by('-id')
+        membership_list = Join_Kvs.objects.filter(status='Approved')
+        if renewal_filter != 'All':
+            membership_list = membership_list.filter(renewal=renewal_filter)
 
-    return render(request, 'join-kvs.html', {'form': form, 'membership_list': membership_list})
+    if mbr_status == 'active':
+        membership_list = membership_list.filter(renewal_end_date__gte=today)
+    elif mbr_status == 'expired':
+        membership_list = membership_list.filter(
+            Q(renewal_end_date__lt=today) | Q(renewal_end_date__isnull=True)
+        )
+
+    membership_list = membership_list.order_by('-id')
+
+    membership_fee_total = None
+    if request.user.is_authenticated and request.user.is_staff:
+        membership_fee_total = get_membership_fee_total_cached()
+
+    return render(request, 'join-kvs.html', {
+        'form': form,
+        'membership_list': membership_list,
+        'renewal_filter': renewal_filter,
+        'mbr_status': mbr_status,
+        'membership_fee_total': membership_fee_total,
+    })
+
+
+def _staff_may_access_member(request, member):
+    if request.user.is_superuser:
+        return True
+    if not request.user.is_staff:
+        return False
+    try:
+        return member.district == request.user.extendedusermodel.district
+    except ExtendedUserModel.DoesNotExist:
+        return False
+
+
+def _inclusive_months_span(from_y, from_m, to_y, to_m):
+    """Calendar months from (from_y, from_m) through (to_y, to_m), inclusive."""
+    if (to_y, to_m) < (from_y, from_m):
+        return None
+    return (to_y - from_y) * 12 + (to_m - from_m) + 1
+
+
+@require_POST
+def renew_membership(request, member_id):
+    if not request.user.is_authenticated or not request.user.is_staff:
+        return JsonResponse({'ok': False, 'error': 'Permission denied'}, status=403)
+
+    member = get_object_or_404(Join_Kvs, pk=member_id, status='Approved')
+    if not _staff_may_access_member(request, member):
+        return JsonResponse({'ok': False, 'error': 'Permission denied'}, status=403)
+
+    try:
+        from_m = int(request.POST.get('from_month', ''))
+        from_y = int(request.POST.get('from_year', ''))
+        to_m = int(request.POST.get('to_month', ''))
+        to_y = int(request.POST.get('to_year', ''))
+    except (TypeError, ValueError):
+        return JsonResponse({'ok': False, 'error': 'Invalid month or year'}, status=400)
+
+    if not (1 <= from_m <= 12 and 1 <= to_m <= 12):
+        return JsonResponse({'ok': False, 'error': 'Invalid month'}, status=400)
+    if from_y < 2000 or from_y > 2100 or to_y < 2000 or to_y > 2100:
+        return JsonResponse({'ok': False, 'error': 'Invalid year'}, status=400)
+
+    total_months = _inclusive_months_span(from_y, from_m, to_y, to_m)
+    if total_months is None:
+        return JsonResponse({
+            'ok': False,
+            'error': 'End period must be on or after the start period (compare month and year).',
+        }, status=400)
+    if total_months <= 0:
+        return JsonResponse({'ok': False, 'error': 'Invalid period length'}, status=400)
+
+    expected_amount = Decimal(total_months * 30)
+    amount_raw = (request.POST.get('amount') or '').strip()
+    try:
+        amount = Decimal(amount_raw) if amount_raw else expected_amount
+    except InvalidOperation:
+        return JsonResponse({'ok': False, 'error': 'Invalid amount'}, status=400)
+    if amount < 0:
+        return JsonResponse({'ok': False, 'error': 'Invalid amount'}, status=400)
+
+    last_day = calendar.monthrange(to_y, to_m)[1]
+    renewal_end = date(to_y, to_m, last_day)
+
+    with transaction.atomic():
+        MembershipRenewal.objects.create(
+            member=member,
+            from_month=from_m,
+            from_year=from_y,
+            to_month=to_m,
+            to_year=to_y,
+            total_months=total_months,
+            amount=amount,
+            created_by=request.user,
+        )
+        member.last_renewed_date = timezone.now()
+        member.renewal_end_date = renewal_end
+        member.renewal = 'Renewed'
+        member.save(update_fields=['last_renewed_date', 'renewal_end_date', 'renewal'])
+
+    invalidate_membership_fee_total_cache()
+
+    return JsonResponse({
+        'ok': True,
+        'message': 'Membership renewed successfully.',
+        'renewal_end_date': renewal_end.isoformat(),
+        'amount': str(amount),
+    })
+
+
+def join_kvs_renewal_history(request, member_id):
+    if not request.user.is_authenticated or not request.user.is_staff:
+        messages.info(request, 'Please log in as staff to view renewal history.')
+        return redirect('kvs_app:login')
+
+    member = get_object_or_404(Join_Kvs, pk=member_id, status='Approved')
+    if not _staff_may_access_member(request, member):
+        messages.error(request, 'You do not have access to this member.')
+        return redirect('kvs_app:join_kvs')
+
+    renewals = member.renewals.select_related('created_by').all()
+    return render(request, 'join-kvs-renewal-history.html', {
+        'member': member,
+        'renewals': renewals,
+    })
+
+
+def join_kvs_renewal_export_csv(request, member_id):
+    if not request.user.is_authenticated or not request.user.is_staff:
+        return HttpResponse('Forbidden', status=403)
+
+    member = get_object_or_404(Join_Kvs, pk=member_id, status='Approved')
+    if not _staff_may_access_member(request, member):
+        return HttpResponse('Forbidden', status=403)
+
+    response = HttpResponse(content_type='text/csv; charset=utf-8')
+    response['Content-Disposition'] = f'attachment; filename="renewals_member_{member_id}.csv"'
+    writer = csv.writer(response)
+    writer.writerow([
+        'Renewed on',
+        'From (month/year)',
+        'To (month/year)',
+        'Total months',
+        'Amount',
+        'Recorded by',
+    ])
+    for r in member.renewals.select_related('created_by').order_by('-renewed_on'):
+        writer.writerow([
+            r.renewed_on.isoformat(sep=' ', timespec='seconds') if r.renewed_on else '',
+            f'{r.from_month}/{r.from_year}',
+            f'{r.to_month}/{r.to_year}',
+            r.total_months,
+            str(r.amount),
+            r.created_by.get_username() if r.created_by else '',
+        ])
+    return response
 
     
 

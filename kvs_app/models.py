@@ -375,8 +375,48 @@ class Join_Kvs(models.Model):
     data_enter_by_name = models.CharField(max_length=25,blank=True,null=True)
     remark = models.TextField(blank=True,null=True)
     data_enter_by_phone = models.CharField(max_length=25,blank=True,null=True)
+    last_renewed_date = models.DateTimeField(blank=True, null=True)
+    renewal_end_date = models.DateField(blank=True, null=True)
+
+    def membership_is_active(self, on_date=None):
+        """Active when today (in default timezone) is on or before renewal_end_date."""
+        if on_date is None:
+            on_date = django.utils.timezone.now().date()
+        if self.renewal_end_date is None:
+            return False
+        return on_date <= self.renewal_end_date
 
 
+class MembershipRenewal(models.Model):
+    class Meta:
+        verbose_name_plural = 'Membership renewals'
+        ordering = ['-renewed_on']
+
+    def __str__(self):
+        return (
+            f'{self.member_id}: {self.from_month}/{self.from_year}–{self.to_month}/{self.to_year} '
+            f'({self.total_months} mo.) ₹{self.amount}'
+        )
+
+    member = models.ForeignKey(
+        'Join_Kvs',
+        on_delete=models.CASCADE,
+        related_name='renewals',
+    )
+    from_month = models.IntegerField()
+    from_year = models.IntegerField()
+    to_month = models.IntegerField()
+    to_year = models.IntegerField()
+    total_months = models.IntegerField()
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    renewed_on = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='membership_renewals_recorded',
+    )
 
 
 class DataBankCategory(models.Model):

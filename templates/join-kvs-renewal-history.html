@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Renewal history — {{ member.name }}</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  </head>
+  <body class="materimonialservices py-4">
+    <div class="container">
+      <h1 class="h3 mb-3">Renewal history</h1>
+      <p class="lead mb-4">
+        <strong>{{ member.name }}</strong>
+        {% if member.membership_no %}— {{ member.membership_no }}{% endif %}
+      </p>
+      <p>
+        <a href="{% url 'kvs_app:join_kvs' %}" class="btn btn-secondary">Back to members</a>
+        <a
+          href="{% url 'kvs_app:join_kvs_renewal_export_csv' member.id %}"
+          class="btn btn-outline-primary"
+          >Export CSV</a
+        >
+      </p>
+      <div class="table-responsive mt-4">
+        <table class="table table-bordered table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th>Renewed on</th>
+              <th>Period</th>
+              <th class="text-right">Months</th>
+              <th class="text-right">Amount</th>
+              <th>Recorded by</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in renewals %}
+            <tr>
+              <td>{{ r.renewed_on|date:"d M Y H:i" }}</td>
+              <td>
+                {{ r.from_month }}/{{ r.from_year }} → {{ r.to_month }}/{{ r.to_year }}
+              </td>
+              <td class="text-right">{{ r.total_months }}</td>
+              <td class="text-right">₹{{ r.amount|floatformat:2 }}</td>
+              <td>
+                {% if r.created_by %}{{ r.created_by.username }}{% else %}—{% endif %}
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="5" class="text-center text-muted">No renewals recorded yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  </body>
+</html>
