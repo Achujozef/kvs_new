@@ -237,7 +237,15 @@ class Join_Kvs_Add_Form(forms.ModelForm):
     class Meta:
         model = Join_Kvs
         fields = '__all__'
-        exclude = ['status', 'last_renewed_date', 'renewal_end_date']
+        exclude = [
+            'status',
+            'last_renewed_date',
+            'renewal_end_date',
+            'payment_details',
+            'paid_month',
+            'renewal',
+            'remark',
+        ]
         widgets = {
             'name': forms.TextInput(attrs={'class':'form-control'}),
             'sex': forms.Select(attrs={'class':'form-control'}),
@@ -255,15 +263,9 @@ class Join_Kvs_Add_Form(forms.ModelForm):
             'id_proof': forms.Select(attrs={'class':'form-control'}),
             'id_proof_no': forms.TextInput(attrs={'class':'form-control'}),
             'membership_no': forms.TextInput(attrs={'class':'form-control'}),
-            'payment_details': forms.Select(attrs={'class':'form-control'}),
-
-            'paid_month': forms.Select(attrs={'class':'form-control'}),
             'insurance_status': forms.Select(attrs={'class':'form-control'}),
-            'renewal': forms.Select(attrs={'class':'form-control'}),
             'data_enter_by_name' : forms.TextInput(attrs={'class':'form-control'}),
             'data_enter_by_phone' : forms.TextInput(attrs={'class':'form-control'}),
-            'remark' : forms.Textarea(attrs={'class':'form-control','rows':4}),
-
         }
 
 
@@ -271,7 +273,7 @@ class Join_Kvs_Admin_Update(forms.ModelForm):
     class Meta:
         model = Join_Kvs
         fields = '__all__'
-        exclude = ['added_by']
+        exclude = ['added_by', 'payment_details', 'paid_month', 'renewal', 'remark']
         widgets = {
             'name': forms.TextInput(attrs={'class':'form-control'}),
             'sex': forms.Select(attrs={'class':'form-control'}),
@@ -289,11 +291,7 @@ class Join_Kvs_Admin_Update(forms.ModelForm):
             'id_proof_no': forms.TextInput(attrs={'class':'form-control'}),
             'membership_no': forms.TextInput(attrs={'class':'form-control'}),
             'status': forms.Select(attrs={'class':'form-control'}),
-            'payment_details': forms.Select(attrs={'class':'form-control'}),
-
-            'paid_month': forms.Select(attrs={'class':'form-control'}),
             'insurance_status': forms.Select(attrs={'class':'form-control'}),
-            'renewal': forms.Select(attrs={'class':'form-control'}),
             'data_enter_by_name' : forms.TextInput(attrs={'class':'form-control'}),
             'data_enter_by_phone' : forms.TextInput(attrs={'class':'form-control'}),
             'last_renewed_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),

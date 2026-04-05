@@ -827,6 +827,7 @@
             <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6">
               <div id="social-right">
                 <ul class="nav justifycontentend">
+                  {% include 'includes/social_bar_membership_fee.html' %}
                   {% if user.is_authenticated and user.is_superuser %}
                   <li class="nav-item">
                     <a

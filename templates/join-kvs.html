@@ -1094,6 +1094,7 @@
             <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6">
               <div id="social-right">
                 <ul class="nav justifycontentend">
+                  {% include 'includes/social_bar_membership_fee.html' %}
                   {% if user.is_authenticated and user.is_superuser %}
                   <li class="nav-item">
                     <a
@@ -1153,13 +1154,6 @@
             id="collapsibleNavbar"
           >
             <ul class="navbar-nav">
-              {% if user.is_staff and membership_fee_total is not None %}
-              <li class="nav-item align-self-center px-2 d-none d-xl-block">
-                <span class="text-white small" style="white-space: nowrap"
-                  >Fees collected: ₹{{ membership_fee_total|floatformat:2 }}</span
-                >
-              </li>
-              {% endif %}
               <li class="nav-item" id="nav-item">
                 <a class="nav-link text-white" href="{% url 'kvs_app:index' %}"
                   >Home</a
@@ -1336,11 +1330,9 @@
             id="head-breadcrump"
           >
             <h1 class="text-center text-white">Join Members</h1>
-            {% if user.is_staff and membership_fee_total is not None %}
             <p class="text-center text-white small mb-0">
-              Total membership fee collected: ₹{{ membership_fee_total|floatformat:2 }}
+              Total monthly fee: ₹{{ membership_fee_total|floatformat:2 }}
             </p>
-            {% endif %}
             <div class="text-breadcrump4"></div>
           </div>
         </div>
@@ -1518,37 +1510,9 @@
 
                                   <div class="col-lg-12 col-md-12 mt-3">
                                     <label class="form-label"
-                                      >Payment Details</label
-                                    >
-                                    {{form.payment_details}}
-                                  </div>
-
-                                  <div class="col-lg-12 col-md-12 mt-3">
-                                    <label class="form-label"
-                                      >Paid Month</label
-                                    >
-                                    {{form.paid_month}}
-                                  </div>
-
-                                  <div class="col-lg-12 col-md-12 mt-3">
-                                    <label class="form-label"
                                       >Insurance status</label
                                     >
                                     {{form.insurance_status}}
-                                  </div>
-
-                                  <div class="col-lg-12 col-md-12 mt-3">
-                                    <label class="form-label"
-                                      >Membership Renewal</label
-                                    >
-                                    {{form.renewal}}
-                                  </div>
-
-                                  <div class="col-lg-12 col-md-12 mt-3">
-                                    <label class="form-label"
-                                      >Remark on Renewal</label
-                                    >
-                                    {{form.remark}}
                                   </div>
                                   <div class="col-lg-12 col-md-12 mt-3">
                                     <label class="form-label"
@@ -1642,7 +1606,7 @@
                           <select name="mbr_status" id="mbr_status" class="form-control" onchange="this.form.submit()">
                               <option value="all" {% if mbr_status == 'all' %}selected{% endif %}>All</option>
                               <option value="active" {% if mbr_status == 'active' %}selected{% endif %}>Active</option>
-                              <option value="expired" {% if mbr_status == 'expired' %}selected{% endif %}>Expired</option>
+                              <option value="expired" {% if mbr_status == 'expired' %}selected{% endif %}>Not renewed</option>
                           </select>
                       </div>
                   </div>
@@ -1673,7 +1637,11 @@
                     {% for i in membership_list %}
                     <tr class="members-row {% if not i.membership_is_active %}membership-expired-row{% endif %}">
                       <td class="text-center">
+                        {% if user.is_staff %}
                         <a class="mbr-name-link" href="{% url "kvs_app:join_kvs_profile_view" i.id %}">{{ i.name }}</a>
+                        {% else %}
+                        {{ i.name }}
+                        {% endif %}
                     </td>
                     
                       <td class="text-center">{{i.district}}</td>
@@ -1683,7 +1651,7 @@
                         {% if i.membership_is_active %}
                           <span class="mbr-badge-active">Active</span>
                         {% else %}
-                          <span class="mbr-badge-expired">Expired</span>
+                          <span class="mbr-badge-expired">Not renewed</span>
                         {% endif %}
                       </td>
                       <td class="text-center">{% if i.renewal_end_date %}{{ i.renewal_end_date|date:"d M Y" }}{% else %}—{% endif %}</td>
@@ -1750,11 +1718,11 @@
                   <tbody>
                     {% for i in membership_list %}
                      <tr class="members-row {% if not i.membership_is_active %}membership-expired-row{% endif %}">
-                      <td class=""><a class="mbr-name-link" href="{% url "kvs_app:join_kvs_profile_view" i.id %}">{{i.name}}</a></td>
+                      <td class="">{% if user.is_staff %}<a class="mbr-name-link" href="{% url "kvs_app:join_kvs_profile_view" i.id %}">{{ i.name }}</a>{% else %}{{ i.name }}{% endif %}</td>
                       <td class="">{{i.district}}</td>
                        <td class="">{{i.union}}</td>
                       <td class="">{{i.membership_no}}</td>
-                      <td class="">{% if i.membership_is_active %}<span class="mbr-badge-active">Active</span>{% else %}<span class="mbr-badge-expired">Expired</span>{% endif %}</td>
+                      <td class="">{% if i.membership_is_active %}<span class="mbr-badge-active">Active</span>{% else %}<span class="mbr-badge-expired">Not renewed</span>{% endif %}</td>
                       <td class="">{% if i.renewal_end_date %}{{ i.renewal_end_date|date:"d M Y" }}{% else %}—{% endif %}</td>
                     </tr>
                     {% endfor %}

@@ -570,16 +570,11 @@ def join_kvs(request):
 
     membership_list = membership_list.order_by('-id')
 
-    membership_fee_total = None
-    if request.user.is_authenticated and request.user.is_staff:
-        membership_fee_total = get_membership_fee_total_cached()
-
     return render(request, 'join-kvs.html', {
         'form': form,
         'membership_list': membership_list,
         'renewal_filter': renewal_filter,
         'mbr_status': mbr_status,
-        'membership_fee_total': membership_fee_total,
     })
 
 
@@ -734,9 +729,18 @@ def join_kvs_update(request,update_id):
     return render(request,'join-kvs-update.html',{'form':form})
 
 
-def join_kvs_profile_view(request,join_kvs_id):
+def join_kvs_profile_view(request, join_kvs_id):
+    if not request.user.is_authenticated or not request.user.is_staff:
+        messages.info(request, 'Please log in as staff to view member profiles.')
+        return redirect('kvs_app:login')
+
+    member = get_object_or_404(Join_Kvs, pk=join_kvs_id)
+    if not _staff_may_access_member(request, member):
+        messages.error(request, 'You do not have access to this member.')
+        return redirect('kvs_app:join_kvs')
+
     kvs = Join_Kvs.objects.filter(id=join_kvs_id)
-    return render (request,'join-kvs-profile-view.html',{'kvs':kvs})
+    return render(request, 'join-kvs-profile-view.html', {'kvs': kvs})
 
 
 

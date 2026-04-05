@@ -99,6 +99,7 @@
                          <div class="col-sm-12 col-xs-12 col-md-6 col-lg-6 col-xl-6">
                             <div id="social-right">
                                 <ul class="nav justifycontentend">
+                                  {% include 'includes/social_bar_membership_fee.html' %}
                                   {% if user.is_authenticated and user.is_superuser %}
                                   <li class="nav-item"><a class="nav-link text-white" href="{% url 'kvs_app:district_admin_register' %}"><i class="fa fa-user-plus" aria-hidden="true"></i></a></li>
                                   {% endif %}
@@ -292,10 +293,6 @@
                                                   <label class="form-label">Membership No</label>
                                                   {{ form.membership_no }}
                                               </div>
-                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                                  <label class="form-label">Payment Details</label>
-                                                  {{ form.payment_details }}
-                                              </div>
                                           </div>
                                   
                                           <div class="row">
@@ -304,24 +301,9 @@
                                                   {{ form.status }}
                                               </div>
                                               <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                                  <label class="form-label">Paid Month</label>
-                                                  {{ form.paid_month }}
-                                              </div>
-                                          </div>
-                                  
-                                          <div class="row">
-                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
                                                   <label class="form-label">Insurance Status</label>
                                                   {{ form.insurance_status }}
                                               </div>
-                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                                  <label class="form-label">Membership Renewal</label>
-                                                  {{ form.renewal }}
-                                              </div>
-                                              <div class="col-lg-6 col-md-6 col-xl-6 p-2">
-                                                <label class="form-label">Remarks on  Renewal</label>
-                                                {{ form.remark }}
-                                            </div>
                                           </div>
                                   
                                           <div class="row">
