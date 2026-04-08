@@ -273,7 +273,15 @@ class Join_Kvs_Admin_Update(forms.ModelForm):
     class Meta:
         model = Join_Kvs
         fields = '__all__'
-        exclude = ['added_by', 'payment_details', 'paid_month', 'renewal', 'remark']
+        exclude = [
+            'added_by',
+            'payment_details',
+            'paid_month',
+            'renewal',
+            'remark',
+            'last_renewed_date',
+            'renewal_end_date',
+        ]
         widgets = {
             'name': forms.TextInput(attrs={'class':'form-control'}),
             'sex': forms.Select(attrs={'class':'form-control'}),
@@ -294,8 +302,6 @@ class Join_Kvs_Admin_Update(forms.ModelForm):
             'insurance_status': forms.Select(attrs={'class':'form-control'}),
             'data_enter_by_name' : forms.TextInput(attrs={'class':'form-control'}),
             'data_enter_by_phone' : forms.TextInput(attrs={'class':'form-control'}),
-            'last_renewed_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
-            'renewal_end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
         }
 
 class PaymentRecordForm(forms.ModelForm):

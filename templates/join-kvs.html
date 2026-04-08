@@ -837,6 +837,11 @@
         border-radius: 8px;
         border-color: var(--kvs-border);
       }
+      .mbr-toolbar-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--kvs-ink);
+      }
       .membership-filter-card {
         background: var(--kvs-orange-soft);
         border: 1px solid var(--kvs-border);
@@ -851,10 +856,19 @@
       }
       .members-table-wrap {
         border-radius: 12px;
-        overflow: hidden;
+        overflow-x: auto;
+        overflow-y: visible;
+        -webkit-overflow-scrolling: touch;
         box-shadow: 0 4px 24px rgba(44, 36, 25, 0.08);
         border: 1px solid var(--kvs-border);
         background: #fff;
+      }
+      .members-scroll-hint {
+        display: none;
+        font-size: 0.75rem;
+        color: var(--kvs-text-secondary);
+        margin: 0 0 0.5rem;
+        padding: 0 0.15rem;
       }
       .members-table {
         margin-bottom: 0;
@@ -1054,6 +1068,135 @@
       #renewSubmitBtn:disabled {
         opacity: 0.75;
         cursor: not-allowed;
+      }
+      /* Desktop / tablet: table wider than viewport scrolls horizontally */
+      @media (min-width: 768px) {
+        .members-table {
+          min-width: 880px;
+        }
+        .members-scroll-hint {
+          display: block;
+        }
+      }
+      /* Mobile: stacked “cards” per row — no horizontal clipping */
+      @media (max-width: 767.98px) {
+        .join-members-section {
+          padding-bottom: 5.5rem;
+        }
+        .join-members-section > .container {
+          padding-left: 12px;
+          padding-right: 12px;
+        }
+        .join-members-card .card-body {
+          padding-left: 0.75rem;
+          padding-right: 0.75rem;
+        }
+        .members-toolbar .num_rows,
+        .members-toolbar .tb_search {
+          width: 100%;
+        }
+        .members-toolbar .form-label.mbr-toolbar-label {
+          font-size: 0.8rem;
+          font-weight: 700;
+          color: var(--kvs-ink);
+          margin-bottom: 0.25rem;
+        }
+        .membership-filter-card {
+          padding: 0.85rem 1rem;
+        }
+        .membership-filter-card .col-md-6 {
+          margin-bottom: 0.75rem;
+        }
+        .membership-filter-card .col-md-6:last-child {
+          margin-bottom: 0;
+        }
+        .members-scroll-hint {
+          display: none !important;
+        }
+        .members-table-wrap {
+          overflow-x: visible;
+          border: none;
+          box-shadow: none;
+          background: transparent;
+        }
+        .members-table,
+        .members-table thead,
+        .members-table tbody,
+        .members-table th,
+        .members-table td,
+        .members-table tr {
+          display: block;
+          width: 100% !important;
+          min-width: 0 !important;
+        }
+        .members-table thead tr {
+          position: absolute;
+          left: -9999px;
+          top: -9999px;
+        }
+        .members-table tbody tr.members-row {
+          margin-bottom: 1rem;
+          border: 1px solid var(--kvs-border);
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 2px 12px rgba(44, 36, 25, 0.06);
+          background: #fff !important;
+        }
+        .members-table tbody tr.members-row.membership-expired-row {
+          background: var(--kvs-expired-bg) !important;
+          box-shadow: inset 4px 0 0 var(--kvs-expired-accent),
+            0 2px 12px rgba(44, 36, 25, 0.06);
+        }
+        .members-table tbody tr.members-row td {
+          position: relative;
+          padding: 0.65rem 0.75rem 0.65rem 48%;
+          text-align: right !important;
+          border-bottom: 1px solid #eee !important;
+          min-height: 2.75rem;
+          word-break: break-word;
+        }
+        .members-table tbody tr.members-row td:last-child {
+          border-bottom: none !important;
+        }
+        .members-table tbody tr.members-row td::before {
+          content: attr(data-label);
+          position: absolute;
+          left: 0.75rem;
+          top: 0.65rem;
+          width: 45%;
+          font-weight: 700;
+          font-size: 0.68rem;
+          text-transform: uppercase;
+          letter-spacing: 0.03em;
+          color: var(--kvs-text-secondary);
+          text-align: left;
+          line-height: 1.3;
+        }
+        .members-table .mbr-badge-active,
+        .members-table .mbr-badge-expired {
+          display: inline-block;
+        }
+        .members-table tbody td .nav {
+          justify-content: flex-end !important;
+          flex-direction: column;
+          align-items: flex-end;
+        }
+        .members-table tbody td .nav .nav-item {
+          width: 100%;
+          text-align: right;
+        }
+        .members-header-actions {
+          float: none !important;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+          justify-content: flex-start;
+          margin-bottom: 1rem;
+        }
+        .members-header-actions .btn {
+          flex: 1 1 auto;
+          min-width: 0;
+        }
       }
     </style>
   </head>
@@ -1348,7 +1491,7 @@
               <div class="container">
                 <div class="row mt-2">
                   <div class="col-sm-12 col-md-12 col-xl-12 col-lg-12">
-                    <div class="float-right">
+                    <div class="float-right members-header-actions">
                       <button
                         type="button"
                         class="btn btn-warning"
@@ -1552,22 +1695,20 @@
                 </div>
               </div>
               <div class="card-body">
-                <div class="container members-toolbar">
+                <div class="container members-toolbar px-0 px-md-3">
                   <div class="row">
-                    <div class="col-sm-12 col-lg-6 col-xl-6 col-md-6">
+                    <div class="col-sm-12 col-lg-6 col-xl-6 col-md-6 mb-2 mb-md-0">
                       <div class="num_rows">
-                        <div class="form-group">
-                          <!--		Show Numbers Of Rows 		-->
+                        <div class="form-group mb-0">
+                          <label for="maxRows" class="form-label mbr-toolbar-label mb-1"
+                            >Rows per page</label
+                          >
                           <select
                             class="form-control"
                             name="state"
                             id="maxRows"
                           >
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="20">20</option>
-                            <option value="50">50</option>
-                            <option value="70">70</option>
+                            <option value="50" selected>50</option>
                             <option value="100">100</option>
                             <option value="5000">Show ALL Rows</option>
                           </select>
@@ -1577,11 +1718,14 @@
                     <div class="col-sm-12 col-lg-6 col-xl-6 col-md-6">
                       <div class="">
                         <div class="tb_search tb_search_taluk">
+                          <label for="search_input_all" class="form-label mbr-toolbar-label mb-1"
+                            >Search</label
+                          >
                           <input
                             type="text"
                             id="search_input_all"
                             onkeyup="FilterkeyWord_all_table()"
-                            placeholder="Search.."
+                            placeholder="Search by name, district…"
                             class="form-control"
                           />
                         </div>
@@ -1590,6 +1734,9 @@
                   </div>
                 </div>
                 <div style="margin-top: 30px"></div>
+                <p class="members-scroll-hint">
+                  Tip: scroll sideways on this table if all columns do not fit on screen.
+                </p>
                 {% if user.is_authenticated %}
                 <form method="GET" class="membership-filter-card">
                   <div class="form-group row mb-0">
@@ -1936,33 +2083,25 @@ PIN 673571.
     </script>
     <!-- js -->
     <script>
-      getPagination("#table-id");
-      $("#maxRows").trigger("change");
       function getPagination(table) {
         $("#maxRows").on("change", function () {
           $(".pagination").html(""); // reset pagination div
           var trnum = 0; // reset tr counter
-          var maxRows = parseInt($(this).val()); // get Max Rows from select option
+          var maxRows = parseInt($(this).val(), 10); // get Max Rows from select option
 
           var totalRows = $(table + " tbody tr").length; // numbers of rows
-          $(table + " tr:gt(0)").each(function () {
-            // each TR in  table and not the header
-            trnum++; // Start Counter
+          $(table + " tbody tr").each(function () {
+            trnum++;
             if (trnum > maxRows) {
-              // if tr number gt maxRows
-
-              $(this).hide(); // fade it out
+              $(this).hide();
             }
             if (trnum <= maxRows) {
               $(this).show();
-            } // else fade in Important in case if it ..
-          }); //  was fade out to fade it in
+            }
+          });
           if (totalRows > maxRows) {
-            // if tr total rows gt max rows option
-            var pagenum = Math.ceil(totalRows / maxRows); // ceil total(rows/maxrows) to get ..
-            //	numbers of pages
+            var pagenum = Math.ceil(totalRows / maxRows);
             for (var i = 1; i <= pagenum; ) {
-              // for each page append pagination li
               $(".pagination")
                 .append(
                   '<li data-page="' +
@@ -1974,50 +2113,70 @@ PIN 673571.
                       </li>'
                 )
                 .show();
-            } // end for i
-          } // end if row count > max rows
-          $(".pagination li:first-child").addClass("active"); // add active class to the first li
+            }
+          }
+          $(".pagination li:first-child").addClass("active");
 
-          //SHOWING ROWS NUMBER OUT OF TOTAL DEFAULT
           showig_rows_count(maxRows, 1, totalRows);
-          //SHOWING ROWS NUMBER OUT OF TOTAL DEFAULT
 
-          $(".pagination li").on("click", function (e) {
-            // on click each page
-            e.preventDefault();
-            var pageNum = $(this).attr("data-page"); // get it's number
-            var trIndex = 0; // reset tr counter
-            $(".pagination li").removeClass("active"); // remove active class from all li
-            $(this).addClass("active"); // add active class to the clicked
+          $(".pagination li")
+            .off("click.mbrPages")
+            .on("click.mbrPages", function (e) {
+              e.preventDefault();
+              var pageNum = $(this).attr("data-page");
+              var trIndex = 0;
+              $(".pagination li").removeClass("active");
+              $(this).addClass("active");
 
-            //SHOWING ROWS NUMBER OUT OF TOTAL
-            showig_rows_count(maxRows, pageNum, totalRows);
-            //SHOWING ROWS NUMBER OUT OF TOTAL
+              showig_rows_count(maxRows, pageNum, totalRows);
 
-            $(table + " tr:gt(0)").each(function () {
-              // each tr in table not the header
-              trIndex++; // tr index counter
-              // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
-              if (
-                trIndex > maxRows * pageNum ||
-                trIndex <= maxRows * pageNum - maxRows
-              ) {
-                $(this).hide();
-              } else {
-                $(this).show();
-              } //else fade in
-            }); // end of for each tr in table
-          }); // end of on click pagination list
+              $(table + " tbody tr").each(function () {
+                trIndex++;
+                if (
+                  trIndex > maxRows * pageNum ||
+                  trIndex <= maxRows * pageNum - maxRows
+                ) {
+                  $(this).hide();
+                } else {
+                  $(this).show();
+                }
+              });
+            });
         });
-        // end of on select change
-
-        // END OF PAGINATION
       }
 
       // SI SETTING
+      function applyMemberTableMobileLabels(tableSelector) {
+        var $table = $(tableSelector);
+        if (!$table.length) return;
+        var headers = [];
+        $table
+          .find("thead tr")
+          .first()
+          .find("th")
+          .each(function () {
+            headers.push(
+              $(this)
+                .text()
+                .replace(/\s+/g, " ")
+                .trim()
+            );
+          });
+        $table.find("tbody tr").each(function () {
+          $(this)
+            .find("td")
+            .each(function (i) {
+              var h = headers[i];
+              if (h) $(this).attr("data-label", h);
+            });
+        });
+      }
+
       $(function () {
-        // Just to append id number for each row
         default_index();
+        applyMemberTableMobileLabels("#table-id");
+        getPagination("#table-id");
+        $("#maxRows").trigger("change");
       });
 
       //ROWS SHOWING FUNCTION
@@ -2036,13 +2195,13 @@ PIN 673571.
         $(".rows_count").html(string);
       }
 
-      // CREATING INDEX
+      // CREATING INDEX (scoped to member list table only)
       function default_index() {
-        $("table tr:eq(0)").prepend("<th> ID </th>");
-
+        var $table = $("#table-id");
+        if (!$table.length) return;
+        $table.find("thead tr").first().prepend("<th> ID </th>");
         var id = 0;
-
-        $("table tr:gt(0)").each(function () {
+        $table.find("tbody tr").each(function () {
           id++;
           $(this).prepend("<td>" + id + "</td>");
         });
@@ -2052,10 +2211,14 @@ PIN 673571.
       function FilterkeyWord_all_table() {
         // Count td if you want to search on all table instead of specific column
 
-        var count = $(".table")
-          .children("tbody")
-          .children("tr:first-child")
-          .children("td").length;
+        var tableEl = document.getElementById("table-id");
+        var count = 0;
+        if (tableEl) {
+          var firstBodyRow = tableEl.querySelector("tbody tr");
+          if (firstBodyRow) {
+            count = firstBodyRow.getElementsByTagName("td").length;
+          }
+        }
 
         // Declare variables
         var input, filter, table, tr, td, i;
@@ -2094,14 +2257,6 @@ PIN 673571.
           $("#maxRows").trigger("change");
         }
       }
-    </script>
-    <script>
-      $("#search_input_all").on("keyup", function () {
-        var value = $(this).val().toLowerCase();
-        $("tbody tr").filter(function () {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-        });
-      });
     </script>
     <!-- js -->
     <script src="{% static 'js/bundle.js' %}"></script>
