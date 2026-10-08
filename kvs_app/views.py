@@ -13,6 +13,7 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.models import User,auth
 from .forms import TalukMemberForm, SakhaMemberForm, DatabankEditForm, MatrimonialUpdateForm, StateCommiteForm,TalukForm,SakhaForm,DatabankAddForm, PaymentRecord , MatrimonialUpdateForm,PaymentRecordForm, Services_Add_Form,Services_Admin_Edit_Form,Join_Kvs_Add_Form,Join_Kvs_Admin_Update
 from .models import TalukMember, SakhaMember, Databank, ExtendedUserModel, Join_Kvs, Matrimonial, Sakha, Services, StateCommitie, Taluk, MembershipRenewal
+from .pagination import paginate
 from .membership_utils import get_membership_fee_total_cached, invalidate_membership_fee_total_cache
 import re
 now = datetime.datetime.now()
@@ -91,6 +92,11 @@ def executiveforum_delete(request,dlt_id):
 
 
 
+def _taluk_page(request, form, taluk):
+    page_obj, q = paginate(request, taluk, ('name', 'phone', 'district'))
+    return render(request, 'taluk.html', {'form': form, 'taluk': page_obj, 'page_obj': page_obj, 'q': q})
+
+
 def taluk(request):
     
     if request.method == 'POST':
@@ -102,14 +108,14 @@ def taluk(request):
         form = TalukForm()
     if request.user.is_superuser:
         taluk = Taluk.objects.all().order_by('-id')
-        return render(request,'taluk.html',{'form':form,'taluk':taluk})
+        return _taluk_page(request, form, taluk)
     elif request.user.is_staff:
         district = request.user.extendedusermodel.district
         taluk = Taluk.objects.filter(district=district).order_by('-id')
-        return render(request,'taluk.html',{'form':form,'taluk':taluk})
+        return _taluk_page(request, form, taluk)
     else:
         taluk = Taluk.objects.all().order_by('-id')
-        return render(request,'taluk.html',{'form':form,'taluk':taluk})
+        return _taluk_page(request, form, taluk)
     # return render(request,'taluk.html',{'form':form,'taluk':taluk})
 
 
@@ -135,6 +141,14 @@ def taluk_delete(request,taluk_id):
 
 
 
+def _sakha_page(request, form, addmemberform, sakha):
+    page_obj, q = paginate(request, sakha, ('sakha_no', 'sakaha_name', 'district', 'taluk_union__name'))
+    return render(request, 'sakha.html', {
+        'addmemberform': addmemberform, 'form': form,
+        'sakha': page_obj, 'page_obj': page_obj, 'q': q,
+    })
+
+
 def sakha(request):
     if request.method == 'POST':
         form = SakhaForm(request.POST)
@@ -151,14 +165,14 @@ def sakha(request):
         print(addmemberform.fields)
     if request.user.is_superuser:
         sakha = Sakha.objects.all().order_by('-id')
-        return render(request,'sakha.html',{'form':form,'sakha':sakha})
+        return _sakha_page(request, form, addmemberform, sakha)
     elif request.user.is_staff:
         district = request.user.extendedusermodel.district
         sakha = Sakha.objects.filter(district=district).order_by('-id')
-        return render(request,'sakha.html',{'form':form,'sakha':sakha})
-    else: 
+        return _sakha_page(request, form, addmemberform, sakha)
+    else:
         sakha = Sakha.objects.all().order_by('-id')
-    return render(request, 'sakha.html', {'addmemberform': addmemberform,'form': form, 'sakha': sakha })
+    return _sakha_page(request, form, addmemberform, sakha)
 
 
 
@@ -184,30 +198,38 @@ def sakha_delete(request,sakha_id):
 
 
 
+def _matrimony_page(request, template, queryset):
+    page_obj, q = paginate(request, queryset, (
+        'name', 'phone', 'district', 'taluk', 'occupation',
+        'education_qualification', 'star__name',
+    ))
+    return render(request, template, {'result': page_obj, 'page_obj': page_obj, 'q': q})
+
+
 def bride(request):
     if request.user.is_superuser:
         bride = Matrimonial.objects.filter(gender__name='Bride (വധു)',status='Approved').order_by('-id')
-        return render(request,'materimonialservices.html',{'result':bride})
+        return _matrimony_page(request, 'materimonialservices.html', bride)
     elif request.user.is_staff:
         district = request.user.extendedusermodel.district
         bride = Matrimonial.objects.filter(gender__name='Bride (വധു)',status='Approved',district=district).order_by('-id')
-        return render(request,'materimonialservices.html',{'result':bride})
+        return _matrimony_page(request, 'materimonialservices.html', bride)
     else:
         bride = Matrimonial.objects.filter(gender__name='Bride (വധു)',status='Approved').order_by('-id')
-        return render(request,'materimonialservices.html',{'result':bride})
+        return _matrimony_page(request, 'materimonialservices.html', bride)
 
 
 def grooms(request):
     if request.user.is_superuser:
         grooms = Matrimonial.objects.filter(gender__name='Groom (വരൻ)',status='Approved').order_by('-id')
-        return render (request,'materimonialservices-grooms.html',{'result':grooms})
+        return _matrimony_page(request, 'materimonialservices-grooms.html', grooms)
     elif request.user.is_staff:
         district = request.user.extendedusermodel.district
         grooms = Matrimonial.objects.filter(gender__name='Groom (വരൻ)',status='Approved',district=district).order_by('-id')
-        return render (request,'materimonialservices-grooms.html',{'result':grooms})
+        return _matrimony_page(request, 'materimonialservices-grooms.html', grooms)
     else:
         grooms = Matrimonial.objects.filter(gender__name='Groom (വരൻ)',status='Approved').order_by('-id')
-        return render (request,'materimonialservices-grooms.html',{'result':grooms})
+        return _matrimony_page(request, 'materimonialservices-grooms.html', grooms)
 
 
         
@@ -217,14 +239,14 @@ def grooms(request):
 def pending(request):
     if request.user.is_superuser:
         pending = Matrimonial.objects.filter(status='Pending').order_by('-id')
-        return render(request,'materimonialservices-pending.html',{'result':pending})
+        return _matrimony_page(request, 'materimonialservices-pending.html', pending)
     elif request.user.is_staff:
         district = request.user.extendedusermodel.district
         pending = Matrimonial.objects.filter(status='Pending',district=district).order_by('-id')
-        return render(request,'materimonialservices-pending.html',{'result':pending})
+        return _matrimony_page(request, 'materimonialservices-pending.html', pending)
     else:
         pending = Matrimonial.objects.filter(status='Pending').order_by('-id')
-        return render(request,'materimonialservices-pending.html',{'result':pending})
+        return _matrimony_page(request, 'materimonialservices-pending.html', pending)
 
 
 
@@ -247,6 +269,13 @@ def pending(request):
 
 
 
+def _search_result_page(request, template, result):
+    if result is not None:
+        result = result.order_by('-id')
+    page_obj, q = paginate(request, result)
+    return render(request, template, {'result': page_obj, 'page_obj': page_obj, 'q': request.GET.get('q', '')})
+
+
 def matrimony_bride_search(request):
     Query = None
     result = None
@@ -254,18 +283,18 @@ def matrimony_bride_search(request):
         if 'q' in request.GET:
             Query = request.GET.get('q')
             result = Matrimonial.objects.filter(Q(name__icontains=Query),gender__name='Bride',status='Approved')
-        return render(request,'bride-search-result.html',{'result':result})
+        return _search_result_page(request, 'bride-search-result.html', result)
     if request.user.is_staff:
         district = request.user.extendedusermodel.district
         if 'q' in request.GET:
             Query = request.GET.get('q')
             result = Matrimonial.objects.filter(Q(name__icontains=Query),gender__name='Bride',status='Approved',district=district)
-        return render(request,'bride-search-result.html',{'result':result})
+        return _search_result_page(request, 'bride-search-result.html', result)
     else:
         if 'q' in request.GET:
             Query = request.GET.get('q')
             result = Matrimonial.objects.filter(Q(name__icontains=Query),gender__name='Bride',status='Approved')
-        return render(request,'bride-search-result.html',{'result':result})
+        return _search_result_page(request, 'bride-search-result.html', result)
 
 
 def matrimony_grooms_search(request):
@@ -275,18 +304,18 @@ def matrimony_grooms_search(request):
         if 'q' in request.GET:
             Query = request.GET.get('q')
             result = Matrimonial.objects.filter(Q(name__icontains=Query),gender__name='Groom',status='Approved')
-        return render(request,'grooms-search-result.html',{'result':result})
+        return _search_result_page(request, 'grooms-search-result.html', result)
     elif request.user.is_staff:
         district = request.user.extendedusermodel.district
         if 'q' in request.GET:
             Query = request.GET.get('q')
             result = Matrimonial.objects.filter(Q(name__icontains=Query),gender__name='Groom',status='Approved',district=district)
-        return render(request,'grooms-search-result.html',{'result':result})
+        return _search_result_page(request, 'grooms-search-result.html', result)
     else:
         if 'q' in request.GET:
             Query = request.GET.get('q')
             result = Matrimonial.objects.filter(Q(name__icontains=Query),gender__name='Groom',status='Approved')
-        return render(request,'grooms-search-result.html',{'result':result})
+        return _search_result_page(request, 'grooms-search-result.html', result)
 
 
 
@@ -338,9 +367,17 @@ def data_bank_register(request):
     return render(request,'marriageregister.html',{'form':form})
 
 
+def _databank_page(request, result):
+    page_obj, q = paginate(request, result, (
+        'name', 'mobile', 'occupation', 'district', 'taluk',
+        'workplace', 'category', 'contact_person',
+    ))
+    return render(request, 'data-bank.html', {'result': page_obj, 'page_obj': page_obj, 'q': q})
+
+
 def data_bank(request):
-    result = Databank.objects.filter(status = 'Unhide')
-    return render(request,'data-bank.html',{'result':result})
+    result = Databank.objects.filter(status = 'Unhide').order_by('-id')
+    return _databank_page(request, result)
 
 def databank_update(request,update_id):
     if request.method == 'POST':
@@ -369,16 +406,19 @@ def data_bank_search(request):
     if 'q' in request.GET:
         Query = request.GET.get('q')
         result = Databank.objects.filter(Q(name__icontains=Query),status = 'Unhide')
-    return render(request,'bride-search-result.html',{'result':result})
+    return _search_result_page(request, 'bride-search-result.html', result)
 
 
 
 
 def data_bank_hide(request):
-    result = Databank.objects.filter(status = 'Hide')
-    return render(request,'data-bank.html',{'result':result})
+    result = Databank.objects.filter(status = 'Hide').order_by('-id')
+    return _databank_page(request, result)
 
 
+
+
+SERVICE_SEARCH_FIELDS = ('name', 'mobile_no', 'id_no', 'sakha_no', 'district', 'taluk')
 
 
 def health_insurance(request):
@@ -400,9 +440,11 @@ def health_insurance(request):
     #     return render(request,'health-insurance.html',{'form':form,'result':result})
     # else:
     result = PaymentRecord.objects.all().order_by('-id')
-    print("Resultss")
-    print("Result", result)
-    return render(request,'health-insurance.html',{'form':form,'result':result})
+    page_obj, q = paginate(request, result, (
+        'name', 'contact_number', 'receipt_num', 'coupen_num', 'sakha_num',
+        'district', 'union', 'category', 'collected_by_name',
+    ))
+    return render(request,'health-insurance.html',{'form':form,'result':page_obj,'page_obj':page_obj,'q':q})
 
 
 
@@ -447,7 +489,8 @@ def accident_insurance(request):
         result = Services.objects.filter(category__name='Accident Insurance',status='Approved',district=district).order_by('-id')
     else:
         result = Services.objects.filter(category__name='Accident Insurance',status='Approved').order_by('-id')
-    return render(request,'accident-insurance.html',{'form':form,'result':result})
+    page_obj, q = paginate(request, result, SERVICE_SEARCH_FIELDS)
+    return render(request,'accident-insurance.html',{'form':form,'result':page_obj,'page_obj':page_obj,'q':q})
 
 
 
@@ -455,14 +498,17 @@ def accident_insurance(request):
 def insurance_pending(request):
     if request.user.is_superuser:
         pending = Services.objects.filter(status='Pending').order_by('-id')
-        return render(request,'insurance-pending.html',{'pending':pending})
+        page_obj, q = paginate(request, pending, SERVICE_SEARCH_FIELDS)
+        return render(request,'insurance-pending.html',{'pending':page_obj,'page_obj':page_obj,'q':q})
     elif request.user.is_staff:
         district = request.user.extendedusermodel.district
         pending = Services.objects.filter(status='Pending',district=district).order_by('-id')
-        return render(request,'insurance-pending.html',{'pending':pending})
+        page_obj, q = paginate(request, pending, SERVICE_SEARCH_FIELDS)
+        return render(request,'insurance-pending.html',{'pending':page_obj,'page_obj':page_obj,'q':q})
     else:
         pending = Services.objects.filter(status='Pending').order_by('-id')
-        return render(request,'insurance-pending.html',{'pending':pending})
+        page_obj, q = paginate(request, pending, SERVICE_SEARCH_FIELDS)
+        return render(request,'insurance-pending.html',{'pending':page_obj,'page_obj':page_obj,'q':q})
 
 
 def insurance_update(request,update_id):
@@ -526,6 +572,9 @@ def insurance_update(request,update_id):
         membership_list = Join_Kvs.objects.filter(status='Approved').order_by('-id')
         return render(request,'join-kvs.html',{'form':form,'membership_list':membership_list})
 
+JOIN_KVS_SEARCH_FIELDS = ('name', 'mobile', 'address', 'place', 'district', 'union', 'sakha_no', 'membership_no')
+
+
 def join_kvs(request):
     if request.method == 'POST':
         form = Join_Kvs_Add_Form(request.POST)
@@ -569,10 +618,13 @@ def join_kvs(request):
         )
 
     membership_list = membership_list.order_by('-id')
+    page_obj, q = paginate(request, membership_list, JOIN_KVS_SEARCH_FIELDS)
 
     return render(request, 'join-kvs.html', {
         'form': form,
-        'membership_list': membership_list,
+        'membership_list': page_obj,
+        'page_obj': page_obj,
+        'q': q,
         'renewal_filter': renewal_filter,
         'mbr_status': mbr_status,
     })
@@ -676,9 +728,11 @@ def join_kvs_renewal_history(request, member_id):
         return redirect('kvs_app:join_kvs')
 
     renewals = member.renewals.select_related('created_by').all()
+    page_obj, q = paginate(request, renewals)
     return render(request, 'join-kvs-renewal-history.html', {
         'member': member,
-        'renewals': renewals,
+        'renewals': page_obj,
+        'page_obj': page_obj,
     })
 
 
@@ -751,7 +805,10 @@ def join_kvs_pending(request):
     elif request.user.is_staff:
         district = request.user.extendedusermodel.district
         pending = Join_Kvs.objects.filter(status = 'Pending',district = district).order_by('-id')
-    return render(request,'join-kvs-pending.html',{'pending':pending})
+    else:
+        pending = Join_Kvs.objects.none()
+    page_obj, q = paginate(request, pending, JOIN_KVS_SEARCH_FIELDS)
+    return render(request,'join-kvs-pending.html',{'pending':page_obj,'page_obj':page_obj,'q':q})
 
 
 
@@ -979,8 +1036,9 @@ def add_member(request, sakha_id):
 
 def sakha_members_list(request, sakha_id):
     sakha = get_object_or_404(Sakha, id=sakha_id)
-    members = SakhaMember.objects.filter(sakha=sakha)
-    return render(request, 'sakha_members_list.html', {'sakha': sakha, 'members': members})
+    members = SakhaMember.objects.filter(sakha=sakha).order_by('id')
+    page_obj, q = paginate(request, members, ('name', 'place', 'phone', 'position'))
+    return render(request, 'sakha_members_list.html', {'sakha': sakha, 'members': page_obj, 'page_obj': page_obj, 'q': q})
 
 def edit_member(request, member_id):
     member = get_object_or_404(SakhaMember, id=member_id)
@@ -1044,5 +1102,6 @@ def delete_taluk_member(request, member_id):
 
 def taluk_members_list(request, taluk_id):
     taluk = get_object_or_404(Taluk, id=taluk_id)
-    members = taluk.members.all()  # `related_name='members'` is used in the `TalukMember` model
-    return render(request, 'taluk_members_list.html', {'taluk': taluk, 'members': members})
+    members = taluk.members.all().order_by('id')  # `related_name='members'` is used in the `TalukMember` model
+    page_obj, q = paginate(request, members, ('name', 'place', 'phone', 'position'))
+    return render(request, 'taluk_members_list.html', {'taluk': taluk, 'members': page_obj, 'page_obj': page_obj, 'q': q})

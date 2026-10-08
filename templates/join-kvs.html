@@ -1701,15 +1701,7 @@
                           <label for="maxRows" class="form-label mbr-toolbar-label mb-1"
                             >Rows per page</label
                           >
-                          <select
-                            class="form-control"
-                            name="state"
-                            id="maxRows"
-                          >
-                            <option value="50" selected>50</option>
-                            <option value="100">100</option>
-                            <option value="5000">Show ALL Rows</option>
-                          </select>
+                          <div class="form-control-plaintext text-white">50 rows per page</div>
                         </div>
                       </div>
                     </div>
@@ -1722,10 +1714,9 @@
                           <input
                             type="text"
                             id="search_input_all"
-                            onkeyup="FilterkeyWord_all_table()"
                             placeholder="Search by name, district…"
                             class="form-control"
-                          />
+                          value="{{ q|default:'' }}" />
                         </div>
                       </div>
                     </div>
@@ -1875,6 +1866,8 @@
                 </table>
                 </div>
                 {% endif %}
+{% include 'partials/pagination.html' %}
+
               </div>
             </div>
           </div>
@@ -2080,181 +2073,26 @@ PIN 673571.
       });
     </script>
     <!-- js -->
-    <script>
-      function getPagination(table) {
-        $("#maxRows").on("change", function () {
-          $(".pagination").html(""); // reset pagination div
-          var trnum = 0; // reset tr counter
-          var maxRows = parseInt($(this).val(), 10); // get Max Rows from select option
-
-          var totalRows = $(table + " tbody tr").length; // numbers of rows
-          $(table + " tbody tr").each(function () {
-            trnum++;
-            if (trnum > maxRows) {
-              $(this).hide();
-            }
-            if (trnum <= maxRows) {
-              $(this).show();
-            }
-          });
-          if (totalRows > maxRows) {
-            var pagenum = Math.ceil(totalRows / maxRows);
-            for (var i = 1; i <= pagenum; ) {
-              $(".pagination")
-                .append(
-                  '<li data-page="' +
-                    i +
-                    '">\
-                        <span>' +
-                    i++ +
-                    '<span class="sr-only">(current)</span></span>\
-                      </li>'
-                )
-                .show();
-            }
-          }
-          $(".pagination li:first-child").addClass("active");
-
-          showig_rows_count(maxRows, 1, totalRows);
-
-          $(".pagination li")
-            .off("click.mbrPages")
-            .on("click.mbrPages", function (e) {
-              e.preventDefault();
-              var pageNum = $(this).attr("data-page");
-              var trIndex = 0;
-              $(".pagination li").removeClass("active");
-              $(this).addClass("active");
-
-              showig_rows_count(maxRows, pageNum, totalRows);
-
-              $(table + " tbody tr").each(function () {
-                trIndex++;
-                if (
-                  trIndex > maxRows * pageNum ||
-                  trIndex <= maxRows * pageNum - maxRows
-                ) {
-                  $(this).hide();
-                } else {
-                  $(this).show();
-                }
-              });
-            });
-        });
-      }
-
-      // SI SETTING
+<script src="{% static 'js/table-tools.js' %}"></script>
+<script>
+      // Adds data-label attributes so the member table can stack on mobile.
       function applyMemberTableMobileLabels(tableSelector) {
         var $table = $(tableSelector);
         if (!$table.length) return;
         var headers = [];
-        $table
-          .find("thead tr")
-          .first()
-          .find("th")
-          .each(function () {
-            headers.push(
-              $(this)
-                .text()
-                .replace(/\s+/g, " ")
-                .trim()
-            );
+        $table.find("thead tr").first().find("th").each(function () {
+          headers.push($(this).text().replace(/\s+/g, " ").trim());
+        });
+        $table.find("tbody tr").each(function () {
+          $(this).find("td").each(function (i) {
+            var h = headers[i];
+            if (h) $(this).attr("data-label", h);
           });
-        $table.find("tbody tr").each(function () {
-          $(this)
-            .find("td")
-            .each(function (i) {
-              var h = headers[i];
-              if (h) $(this).attr("data-label", h);
-            });
         });
       }
-
       $(function () {
-        default_index();
         applyMemberTableMobileLabels("#table-id");
-        getPagination("#table-id");
-        $("#maxRows").trigger("change");
       });
-
-      //ROWS SHOWING FUNCTION
-      function showig_rows_count(maxRows, pageNum, totalRows) {
-        //Default rows showing
-        var end_index = maxRows * pageNum;
-        var start_index = maxRows * pageNum - maxRows + parseFloat(1);
-        var string =
-          "Showing " +
-          start_index +
-          " to " +
-          end_index +
-          " of " +
-          totalRows +
-          " entries";
-        $(".rows_count").html(string);
-      }
-
-      // CREATING INDEX (scoped to member list table only)
-      function default_index() {
-        var $table = $("#table-id");
-        if (!$table.length) return;
-        $table.find("thead tr").first().prepend("<th> ID </th>");
-        var id = 0;
-        $table.find("tbody tr").each(function () {
-          id++;
-          $(this).prepend("<td>" + id + "</td>");
-        });
-      }
-
-      // All Table search script
-      function FilterkeyWord_all_table() {
-        // Count td if you want to search on all table instead of specific column
-
-        var tableEl = document.getElementById("table-id");
-        var count = 0;
-        if (tableEl) {
-          var firstBodyRow = tableEl.querySelector("tbody tr");
-          if (firstBodyRow) {
-            count = firstBodyRow.getElementsByTagName("td").length;
-          }
-        }
-
-        // Declare variables
-        var input, filter, table, tr, td, i;
-        input = document.getElementById("search_input_all");
-        var input_value = document.getElementById("search_input_all").value;
-        filter = input.value.toLowerCase();
-        if (input_value != "") {
-          table = document.getElementById("table-id");
-          tr = table.getElementsByTagName("tr");
-
-          // Loop through all table rows, and hide those who don't match the search query
-          for (i = 1; i < tr.length; i++) {
-            var flag = 0;
-
-            for (j = 0; j < count; j++) {
-              td = tr[i].getElementsByTagName("td")[j];
-              if (td) {
-                var td_text = td.innerHTML;
-                if (td.innerHTML.toLowerCase().indexOf(filter) > -1) {
-                  //var td_text = td.innerHTML;
-                  //td.innerHTML = 'shaban';
-                  flag = 1;
-                } else {
-                  //DO NOTHING
-                }
-              }
-            }
-            if (flag == 1) {
-              tr[i].style.display = "";
-            } else {
-              tr[i].style.display = "none";
-            }
-          }
-        } else {
-          //RESET TABLE
-          $("#maxRows").trigger("change");
-        }
-      }
     </script>
     <!-- js -->
     <script src="{% static 'js/bundle.js' %}"></script>
