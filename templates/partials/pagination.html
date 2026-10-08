@@ -2,14 +2,18 @@
   Server-side pagination controls. Expects `page_obj` from kvs_app.pagination.paginate.
 {% endcomment %}
 <style>
-  .kvs-pagination .page-link { color: #da8616; background: #fff; border-color: #dee2e6; }
-  .kvs-pagination .page-item.active .page-link { background: #da8616; border-color: #da8616; color: #fff; }
-  .kvs-pagination .page-item.disabled .page-link { color: #6c757d; }
+  /* style.css forces `a { color: #fff !important }`, so colours here need !important too. */
+  .kvs-pagination .page-link { color: #da8616 !important; background: #fff; border-color: #dee2e6; }
+  .kvs-pagination a.page-link:hover { color: #fff !important; background: #da8616; }
+  .kvs-pagination .page-item.active .page-link { background: #da8616; border-color: #da8616; color: #fff !important; }
+  .kvs-pagination .page-item.disabled .page-link { color: #6c757d !important; background: #fff; }
+  .kvs-pagination-wrap { background: #fff; padding: 10px 14px; border-radius: 6px; }
+  .kvs-pagination-wrap .kvs-page-summary { color: #333 !important; }
   .kvs-pagination-wrap .pagination { display: flex; padding-left: 0; list-style: none; }
 </style>
 <script>window.KVS_PAGE_START = {{ page_obj.start_index|default:1 }};</script>
 <div class="kvs-pagination-wrap d-flex flex-wrap justify-content-between align-items-center mt-3">
-  <div class="kvs-page-summary text-white mb-2">
+  <div class="kvs-page-summary mb-2">
     {% if page_obj.paginator.count %}
       Showing {{ page_obj.start_index }} to {{ page_obj.end_index }} of {{ page_obj.paginator.count }} entries
     {% else %}
