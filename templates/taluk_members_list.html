@@ -188,6 +188,7 @@
 {% block content %}
 <div class="container mt-5">
     <h2>Office Bearers of Taluk: {{ taluk.name }}</h2>
+    <div class="tb_search mt-3"><input type="text" id="search_input_all" placeholder="Search by name, phone, position.." class="form-control" value="{{ q|default:'' }}"></div>
     <table class="table table-hover table-bordered mt-4">
         <thead class="thead-dark">
             <tr>

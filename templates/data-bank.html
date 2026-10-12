@@ -1099,12 +1099,12 @@
           >
             <div class="form_search">
               <form
-                action="{% url 'kvs_app:data_bank_search' %}"
+                action=""
                 method="get"
                 class="search-bar"
-                traget="_blank"
+                
               >
-                <input type="text" placeholder="Search..." name="q" />
+                <input type="text" placeholder="Search by name, mobile, place..." name="q" value="{{ q|default:'' }}" />
                 <div id="fa-search">
                   <button type="submit"><i class="fa fa-search"></i></button>
                 </div>

@@ -7,6 +7,7 @@ from unittest import result
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.db import transaction
 from django.utils import timezone
 from django.views.decorators.http import require_POST
@@ -51,6 +52,7 @@ def executiveforum(request):
     patron = StateCommitie.objects.filter(position='patron').order_by('-id')
     legal_advisor  = StateCommitie.objects.filter(position='legal_advisor').order_by('-id')
     working_committee = StateCommitie.objects.filter(position='working_committee').order_by('-id')
+    working_committee, q = paginate(request, working_committee, ('name', 'phone', 'place'))
     state_commite = StateCommitie.objects.all().order_by('-id')
     print(patron)
     return render(request, 'executiveforum.html', 
@@ -64,7 +66,9 @@ def executiveforum(request):
             'joint_secretaries': joint_secretaries,
             'patron':patron,
             'legal_advisor':legal_advisor,
-            'working_committee': working_committee
+            'working_committee': working_committee,
+            'page_obj': working_committee,
+            'q': q,
         }
     )
 
@@ -269,55 +273,19 @@ def pending(request):
 
 
 
-def _search_result_page(request, template, result):
-    if result is not None:
-        result = result.order_by('-id')
-    page_obj, q = paginate(request, result)
-    return render(request, template, {'result': page_obj, 'page_obj': page_obj, 'q': request.GET.get('q', '')})
+def _redirect_with_query(request, url_name):
+    url = reverse(url_name)
+    query = request.GET.urlencode()
+    return redirect(f'{url}?{query}' if query else url)
 
 
+# Old search URLs: the list pages filter and paginate themselves now.
 def matrimony_bride_search(request):
-    Query = None
-    result = None
-    if request.user.is_superuser:
-        if 'q' in request.GET:
-            Query = request.GET.get('q')
-            result = Matrimonial.objects.filter(Q(name__icontains=Query),gender__name='Bride',status='Approved')
-        return _search_result_page(request, 'bride-search-result.html', result)
-    if request.user.is_staff:
-        district = request.user.extendedusermodel.district
-        if 'q' in request.GET:
-            Query = request.GET.get('q')
-            result = Matrimonial.objects.filter(Q(name__icontains=Query),gender__name='Bride',status='Approved',district=district)
-        return _search_result_page(request, 'bride-search-result.html', result)
-    else:
-        if 'q' in request.GET:
-            Query = request.GET.get('q')
-            result = Matrimonial.objects.filter(Q(name__icontains=Query),gender__name='Bride',status='Approved')
-        return _search_result_page(request, 'bride-search-result.html', result)
+    return _redirect_with_query(request, 'kvs_app:bride')
 
 
 def matrimony_grooms_search(request):
-    Query = None
-    result = None
-    if request.user.is_superuser:
-        if 'q' in request.GET:
-            Query = request.GET.get('q')
-            result = Matrimonial.objects.filter(Q(name__icontains=Query),gender__name='Groom',status='Approved')
-        return _search_result_page(request, 'grooms-search-result.html', result)
-    elif request.user.is_staff:
-        district = request.user.extendedusermodel.district
-        if 'q' in request.GET:
-            Query = request.GET.get('q')
-            result = Matrimonial.objects.filter(Q(name__icontains=Query),gender__name='Groom',status='Approved',district=district)
-        return _search_result_page(request, 'grooms-search-result.html', result)
-    else:
-        if 'q' in request.GET:
-            Query = request.GET.get('q')
-            result = Matrimonial.objects.filter(Q(name__icontains=Query),gender__name='Groom',status='Approved')
-        return _search_result_page(request, 'grooms-search-result.html', result)
-
-
+    return _redirect_with_query(request, 'kvs_app:grooms')
 
 
 def profile_details(request,details_id):
@@ -401,12 +369,8 @@ def databank_delete(request,dlt_id):
 
 
 def data_bank_search(request):
-    Query = None
-    result = None
-    if 'q' in request.GET:
-        Query = request.GET.get('q')
-        result = Databank.objects.filter(Q(name__icontains=Query),status = 'Unhide')
-    return _search_result_page(request, 'bride-search-result.html', result)
+    return _redirect_with_query(request, 'kvs_app:data_bank')
+
 
 
 
